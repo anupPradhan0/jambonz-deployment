@@ -8,8 +8,6 @@ services:
       MYSQL_DATABASE: jambones
       MYSQL_USER: jambones
       MYSQL_PASSWORD: jambones_password
-    ports:
-      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
