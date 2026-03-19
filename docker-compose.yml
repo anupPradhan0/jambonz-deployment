@@ -36,22 +36,24 @@ services:
 
   # Drachtio SIP Server
   drachtio:
-    image: drachtio/drachtio-server:latest
-    container_name: jambonz-drachtio
-    ports:
-      # drachtio control port (apps connect here)
-      - "9022:9022"
-    environment:
-      DRACHTIO_SECRET: cymru
-    networks:
-      - jambonz-network
-    healthcheck:
-      # The image lacks common probing tools (nc/ss) and /dev/tcp is not supported by its /bin/sh.
-      # For local dev we treat "container is running" as healthy.
-      test: ["CMD-SHELL", "exit 0"]
-      interval: 10s
-      timeout: 3s
-      retries: 10
+      image: drachtio/drachtio-server:latest
+      container_name: jambonz-drachtio
+      ports:
+        - "9022:9022"
+      environment:
+        DRACHTIO_SECRET: cymru
+      command: >
+        drachtio
+        --contact "sip:138.201.59.156:5060;transport=udp"
+        --contact "sip:138.201.59.156:5060;transport=tcp"
+        --external-ip 138.201.59.156
+      networks:
+        - jambonz-network
+      healthcheck:
+        test: ["CMD-SHELL", "exit 0"]
+        interval: 10s
+        timeout: 3s
+        retries: 10
 
   # Prometheus for Metrics
   prometheus:
