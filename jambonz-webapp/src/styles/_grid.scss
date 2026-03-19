@@ -1,0 +1,128 @@
+@use "src/styles/vars";
+@use "src/styles/mixins";
+@use "@jambonz/ui-kit/src/styles/vars" as ui-vars;
+@use "@jambonz/ui-kit/src/styles/mixins" as ui-mixins;
+
+@mixin grid-break {
+  @media (max-width: vars.$gridbreak1) {
+    @content;
+  }
+}
+
+@mixin grid-break2 {
+  @media (max-width: vars.$gridbreak2) {
+    @content;
+  }
+}
+
+.grid {
+  > * + * {
+    border-top: 1px solid ui-vars.$grey;
+  }
+
+  &__row {
+    display: grid;
+    padding: ui-vars.$px03;
+    align-items: center;
+    @include ui-mixins.m();
+
+    @include mixins.small() {
+      padding: ui-vars.$px02;
+    }
+
+    > div {
+      padding-right: ui-vars.$px02;
+    }
+  }
+  &__empty {
+    display: flex;
+  }
+
+  &__th {
+    @include ui-mixins.font-medium();
+  }
+
+  &--col3 {
+    .grid__row {
+      grid-template-columns: [col] 60% [col] 20% [col] 20%;
+      grid-template-rows: [row] auto [row] auto [row];
+
+      > div:nth-child(1) {
+        @include grid-break() {
+          grid-column: col / span 2;
+          grid-row: row;
+        }
+
+        @include grid-break2() {
+          grid-column: col / span 3;
+          grid-row: row;
+        }
+      }
+
+      > div:nth-child(2) {
+        @include grid-break() {
+          grid-column: col / span 2;
+          grid-row: row 2;
+        }
+
+        @include grid-break2() {
+          grid-column: col;
+          grid-row: row 2;
+          margin-top: ui-vars.$px02;
+        }
+      }
+
+      > div:nth-child(3) {
+        text-align: right;
+
+        @include grid-break() {
+          grid-column: col 3;
+          grid-row: row / span 2;
+        }
+
+        @include grid-break2() {
+          grid-column: col 2 / span 2;
+          grid-row: row 2;
+          margin-top: ui-vars.$px02;
+        }
+      }
+    }
+
+    .grid__th {
+      > div:nth-child(2),
+      > div:nth-child(3) {
+        @include grid-break() {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &--col3--users {
+    .grid__row {
+      grid-template-columns: [col] 40% [col] 58% [col] 2%;
+      grid-template-rows: [row] auto [row] auto [row] [row] auto;
+      display: grid;
+      justify-content: space-between;
+
+      > div:last-child {
+        text-align: left;
+        padding-right: 0;
+      }
+    }
+  }
+
+  &--col4--users {
+    .grid__row {
+      grid-template-columns: [col] 30% [col] 40% [col] 25% [col] 5%;
+      grid-template-rows: [row] auto [row] auto [row] [row] auto;
+      display: grid;
+      justify-content: space-between;
+
+      > div:last-child {
+        text-align: left;
+        padding-right: 0;
+      }
+    }
+  }
+}

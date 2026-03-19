@@ -1,0 +1,80 @@
+version: '3'
+
+networks:
+  sbc-inbound:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.38.0.0/16
+
+services:  
+  mysql:
+    image: mysql:5.7
+    platform: linux/x86_64
+    ports:
+      - "3306:3306"
+    environment: 
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "--protocol", "tcp"]
+      timeout: 5s
+      retries: 15    
+    networks:
+      sbc-inbound:
+        ipv4_address: 172.38.0.2
+  sbc:
+    image: drachtio/drachtio-server:0.8.26
+    command: drachtio --contact "sip:*;transport=udp" --loglevel debug --sofia-loglevel 9
+    ports:
+      - "9060:9022/tcp"
+    networks:
+      sbc-inbound:
+        ipv4_address: 172.38.0.10
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  appserver:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas.xml
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-inbound:
+        ipv4_address: 172.38.0.11
+
+  auth-server:
+    image: jambonz/customer-auth-server:latest
+    command: npm start
+    ports:
+      - "4000:4000/tcp"
+    env_file: docker.env
+    networks:
+      sbc-inbound:
+        ipv4_address: 172.38.0.12
+
+  redis:
+    image: redis:5-alpine
+    ports:
+      - "16379:6379/tcp"
+    networks:
+      sbc-inbound:
+        ipv4_address: 172.38.0.13
+
+  rtpengine:
+    image: drachtio/rtpengine:latest
+    command: rtpengine --interface private/172.38.0.14 --interface public/172.38.0.14!172.38.0.14
+    ports:
+      - "12222:22222/udp"
+    networks:
+      sbc-inbound:
+        ipv4_address: 172.38.0.14
+
+  influxdb:
+    image: influxdb:1.8
+    ports:
+      - "8086:8086"
+    networks:
+      sbc-inbound:
+        ipv4_address: 172.38.0.90

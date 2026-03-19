@@ -1,0 +1,376 @@
+@use "./vars";
+@use "./mixins";
+@use "@jambonz/ui-kit/src/styles/vars" as ui-vars;
+@use "@jambonz/ui-kit/src/styles/mixins" as ui-mixins;
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+  padding: ui-vars.$px01 ui-vars.$px02;
+  border-radius: ui-vars.$px01;
+  border: 2px solid ui-vars.$grey;
+  background-color: ui-vars.$white;
+  color: inherit;
+  @include ui-mixins.m();
+
+  &:focus {
+    border-color: ui-vars.$dark;
+    outline: 0;
+  }
+
+  &::placeholder {
+    color: vars.$jeangrey;
+  }
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  height: ui-vars.$px02;
+  width: ui-vars.$px02;
+  margin: 0;
+}
+
+fieldset {
+  > input[disabled] {
+    @include mixins.disabled();
+  }
+}
+
+.form {
+  &--login {
+    margin-top: ui-vars.$px04;
+    width: 100%;
+    max-width: ui-vars.$width-small;
+    background-color: ui-vars.$white;
+    padding: ui-vars.$px03;
+    border-radius: ui-vars.$px02;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: ui-vars.$dark;
+
+    @include mixins.small() {
+      padding: ui-vars.$px02;
+    }
+
+    > * + * {
+      margin-top: ui-vars.$px02;
+    }
+
+    > input,
+    > button {
+      width: 100%;
+    }
+    > a {
+      width: 100%;
+    }
+
+    .msg {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  &--internal {
+    > * + * {
+      @include mixins.formline();
+    }
+
+    fieldset {
+      padding: ui-vars.$px03;
+
+      @include mixins.small() {
+        padding: ui-vars.$px02;
+      }
+    }
+
+    /** Third-party -- e.g. @jambonz/ui-kit */
+    .tabs__nav {
+      padding: ui-vars.$px01 ui-vars.$px03;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .tabs__tabs__item > * + * {
+      @include mixins.formline();
+    }
+
+    .btnty > .ico {
+      @include mixins.icosize();
+    }
+  }
+
+  &--blur {
+    pointer-events: none;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    @include ui-mixins.font-medium();
+    @include ui-mixins.m();
+
+    span {
+      color: ui-vars.$jambonz;
+    }
+
+    input[type="radio"] {
+      margin: 0 ui-vars.$px01 0 0;
+    }
+
+    button[type="button"] {
+      margin-left: ui-vars.$px01;
+      cursor: pointer;
+    }
+
+    svg {
+      stroke: ui-vars.$teal;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  fieldset {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    min-inline-size: auto;
+
+    label {
+      max-width: fit-content;
+    }
+
+    label + * {
+      margin-top: ui-vars.$px01;
+    }
+
+    div + textarea {
+      margin-top: ui-vars.$px02;
+    }
+
+    textarea {
+      border-radius: ui-vars.$px01;
+    }
+
+    * + label {
+      margin-top: ui-vars.$px02;
+    }
+
+    > div + div,
+    > div + details {
+      margin-top: ui-vars.$px02;
+    }
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"] {
+    width: 100%;
+    max-width: vars.$widthinput;
+  }
+}
+
+.chk {
+  display: flex;
+  align-items: center;
+
+  input {
+    margin: 0 ui-vars.$px01 0 0;
+  }
+}
+
+.multi {
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 1090px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inp {
+    width: 100%;
+    max-width: vars.$widthinput;
+  }
+
+  .sel {
+    width: 100%;
+    max-width: 130px;
+    margin-left: ui-vars.$px01;
+
+    &--preset {
+      max-width: 230px;
+    }
+
+    @media (max-width: 1090px) {
+      margin-left: 0;
+      margin-top: ui-vars.$px01;
+      max-width: vars.$widthinput;
+    }
+  }
+}
+
+.gateway,
+.gateway-inbound {
+  padding: ui-vars.$px02;
+  border-radius: ui-vars.$px01;
+  border: 2px solid ui-vars.$grey;
+  max-width: ui-vars.$width-mobile;
+  position: relative;
+
+  > div {
+    display: grid;
+    grid-gap: ui-vars.$px02;
+    align-items: center;
+
+    &:nth-child(1) {
+      grid-template-columns: [col] calc(50% - #{ui-vars.$px02 * 2}) [col] 20% [col] 30%;
+
+      @include mixins.small() {
+        grid-template-columns: [col] 100%;
+      }
+    }
+
+    &:nth-child(2) {
+      grid-template-columns: repeat(3, 1fr);
+      margin-top: ui-vars.$px02;
+
+      > div:last-child {
+        text-align: right;
+      }
+
+      @include mixins.small() {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+
+  > button {
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+    transform: translate3d(50%, 50%, 0);
+
+    @include mixins.small() {
+      top: auto;
+      bottom: auto;
+      transform: none;
+      position: relative;
+      margin-top: ui-vars.$px02;
+      display: flex;
+      margin-left: auto;
+    }
+  }
+
+  &--sip {
+    > button {
+      bottom: 25%;
+
+      @include mixins.small() {
+        top: auto;
+        bottom: auto;
+        transform: none;
+        position: relative;
+        margin-top: ui-vars.$px02;
+      }
+    }
+  }
+}
+
+.gateway-inbound {
+  > div {
+    &:nth-child(1) {
+      grid-template-columns: [col] calc(70% - #{ui-vars.$px02 * 2}) [col] 30%;
+
+      @include mixins.small() {
+        grid-template-columns: [col] 100%;
+      }
+    }
+  }
+}
+
+.lcr {
+  @extend .gateway;
+
+  > div {
+    display: grid;
+    grid-gap: ui-vars.$px02;
+    align-items: center;
+    margin-left: 3%;
+
+    &:nth-child(1) {
+      grid-template-columns: [col] calc(50% - #{ui-vars.$px02 * 2}) [col] 50%;
+
+      @include mixins.small() {
+        grid-template-columns: [col] 100%;
+      }
+    }
+  }
+}
+
+.bucket_tag {
+  @extend .lcr;
+}
+
+.customVoice {
+  padding: ui-vars.$px02;
+  border-radius: ui-vars.$px01;
+  border: 2px solid ui-vars.$grey;
+  max-width: ui-vars.$width-mobile;
+  position: relative;
+
+  > div {
+    display: grid;
+    grid-gap: ui-vars.$px02;
+    align-items: center;
+
+    &:nth-child(1) {
+      grid-template-columns: [col] 100%;
+    }
+
+    &:nth-child(2) {
+      grid-template-columns: [col] calc(40% - #{ui-vars.$px02 * 2}) [col] 60%;
+      margin-top: ui-vars.$px02;
+    }
+
+    &:nth-child(3) {
+      grid-template-columns: [col] 100%;
+      margin-top: ui-vars.$px02;
+    }
+
+    &:nth-child(4) {
+      grid-template-columns: [col] 100%;
+      margin-top: ui-vars.$px02;
+    }
+
+    &:nth-child(5) {
+      grid-template-columns: [col] 100%;
+      margin-top: ui-vars.$px02;
+    }
+  }
+
+  > button {
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+    transform: translate3d(50%, 50%, 0);
+
+    @include mixins.small() {
+      top: auto;
+      bottom: auto;
+      transform: none;
+      position: relative;
+      margin-top: ui-vars.$px02;
+      display: flex;
+      margin-left: auto;
+    }
+  }
+}

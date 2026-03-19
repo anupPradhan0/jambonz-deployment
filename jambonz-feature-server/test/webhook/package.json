@@ -1,0 +1,15 @@
+{
+  "name": "webhook",
+  "version": "1.0.0",
+  "description": "simple webhook app for test purposes",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "author": "Dave Horton",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.12.0"
+  }
+}

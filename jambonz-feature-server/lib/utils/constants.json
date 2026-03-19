@@ -1,0 +1,368 @@
+{
+  "TaskName": {
+    "Alert": "alert",
+    "Answer": "answer",
+    "Conference": "conference",
+    "Config": "config",
+    "Dequeue": "dequeue",
+    "Dial": "dial",
+    "Dialogflow": "dialogflow",
+    "Dtmf": "dtmf",
+    "Dub": "dub",
+    "Enqueue": "enqueue",
+    "Gather": "gather",
+    "Hangup": "hangup",
+    "Leave": "leave",
+    "Lex": "lex",
+    "Listen": "listen",
+    "Llm": "llm",
+    "Message": "message",
+    "Pause": "pause",
+    "Play": "play",
+    "Rasa": "rasa",
+    "Redirect": "redirect",
+    "RestDial": "rest:dial",
+    "SipDecline": "sip:decline",
+    "SipRequest": "sip:request",
+    "SipRefer": "sip:refer",
+    "SipNotify": "sip:notify",
+    "SipRedirect": "sip:redirect",
+    "Say": "say",
+    "SayLegacy": "say:legacy",
+    "Stream": "stream",
+    "Tag": "tag",
+    "Transcribe": "transcribe"
+  },
+  "AllowedSipRecVerbs": ["answer", "config", "gather", "transcribe", "listen", "tag", "hangup", "sip:decline"],
+  "AllowedConfirmSessionVerbs": ["config", "gather", "plays", "say", "tag"],
+  "CallStatus": {
+    "Trying": "trying",
+    "Ringing": "ringing",
+    "EarlyMedia": "early-media",
+    "InProgress": "in-progress",
+    "Queued": "queued",
+    "Failed": "failed",
+    "Busy": "busy",
+    "NoAnswer": "no-answer",
+    "Completed": "completed"
+  },
+  "CallDirection": {
+    "Inbound": "inbound",
+    "Outbound": "outbound",
+    "None": "none"
+  },
+  "ListenStatus": {
+    "Pause": "pause",
+    "Silence": "silence",
+    "Resume": "resume"
+  },
+  "TranscribeStatus": {
+    "Pause": "pause",
+    "Silence": "silence",
+    "Resume": "resume"
+  },
+  "TaskPreconditions": {
+    "None": "none",
+    "Endpoint": "endpoint",
+    "StableCall": "stable-call",
+    "UnansweredCall": "unanswered-call"
+  },
+  "AvmdEvents": {
+    "Beep": "avmd::beep"
+  },
+  "GoogleTranscriptionEvents": {
+    "Transcription": "google_transcribe::transcription",
+    "EndOfUtterance": "google_transcribe::end_of_utterance",
+    "NoAudioDetected": "google_transcribe::no_audio_detected",
+    "MaxDurationExceeded": "google_transcribe::max_duration_exceeded",
+    "VadDetected": "google_transcribe::vad_detected"
+  },
+  "NuanceTranscriptionEvents": {
+    "Transcription": "nuance_transcribe::transcription",
+    "StartOfSpeech": "nuance_transcribe::start_of_speech",
+    "TranscriptionComplete": "nuance_transcribe::end_of_transcription",
+    "Error": "nuance_transcribe::error",
+    "VadDetected": "nuance_transcribe::vad_detected"
+  },
+  "NvidiaTranscriptionEvents": {
+    "Transcription": "nvidia_transcribe::transcription",
+    "StartOfSpeech": "nvidia_transcribe::start_of_speech",
+    "TranscriptionComplete": "nvidia_transcribe::end_of_transcription",
+    "Error": "nvidia_transcribe::error",
+    "VadDetected": "nvidia_transcribe::vad_detected"
+  },
+  "DeepgramTranscriptionEvents": {
+    "Transcription": "deepgram_transcribe::transcription",
+    "ConnectFailure": "deepgram_transcribe::connect_failed",
+    "Connect": "deepgram_transcribe::connect",
+    "Error": "deepgram_transcribe::error"
+  },
+  "DeepgramfluxTranscriptionEvents": {
+    "Transcription": "deepgramflux_transcribe::transcription",
+    "ConnectFailure": "deepgramflux_transcribe::connect_failed",
+    "Connect": "deepgramflux_transcribe::connect",
+    "Error": "deepgramflux_transcribe::error"
+  },
+  "GladiaTranscriptionEvents": {
+    "Transcription": "gladia_transcribe::transcription",
+    "ConnectFailure": "gladia_transcribe::connect_failed",
+    "Connect": "gladia_transcribe::connect",
+    "Error": "gladia_transcribe::error"
+  },
+  "SonioxTranscriptionEvents": {
+    "Transcription": "soniox_transcribe::transcription",
+    "Error": "soniox_transcribe::error"
+  },
+  "VerbioTranscriptionEvents": {
+    "Transcription": "verbio_transcribe::transcription",
+    "Error": "verbio_transcribe::error"
+  },
+  "CobaltTranscriptionEvents": {
+    "Transcription": "cobalt_speech::transcription",
+    "CompileContext": "cobalt_speech::compile_context_response",
+    "Error": "cobalt_speech::error"
+  },
+  "IbmTranscriptionEvents": {
+    "Transcription": "ibm_transcribe::transcription",
+    "ConnectFailure": "ibm_transcribe::connect_failed",
+    "Connect": "ibm_transcribe::connect",
+    "Error": "ibm_transcribe::error"
+  },
+  "AwsTranscriptionEvents": {
+    "Transcription": "aws_transcribe::transcription",
+    "EndOfTranscript": "aws_transcribe::end_of_transcript",
+    "NoAudioDetected": "aws_transcribe::no_audio_detected",
+    "MaxDurationExceeded": "aws_transcribe::max_duration_exceeded",
+    "VadDetected": "aws_transcribe::vad_detected"
+  },
+  "AzureTranscriptionEvents": {
+    "Transcription": "azure_transcribe::transcription",
+    "StartOfUtterance": "azure_transcribe::start_of_utterance",
+    "EndOfUtterance": "azure_transcribe::end_of_utterance",
+    "NoSpeechDetected": "azure_transcribe::no_speech_detected",
+    "VadDetected": "azure_transcribe::vad_detected"
+  },
+  "SpeechmaticsTranscriptionEvents": {
+    "Transcription": "speechmatics_transcribe::transcription",
+    "Translation": "speechmatics_transcribe::translation",
+    "Info": "speechmatics_transcribe::info",
+    "RecognitionStarted": "speechmatics_transcribe::recognition_started",
+    "ConnectFailure": "speechmatics_transcribe::connect_failed",
+    "Connect": "speechmatics_transcribe::connect",
+    "Error": "speechmatics_transcribe::error"
+  },
+  "OpenAITranscriptionEvents": {
+    "Transcription": "openai_transcribe::transcription",
+    "Translation": "openai_transcribe::translation",
+    "SpeechStarted": "openai_transcribe::speech_started",
+    "SpeechStopped": "openai_transcribe::speech_stopped",
+    "PartialTranscript": "openai_transcribe::partial_transcript",
+    "Info": "openai_transcribe::info",
+    "RecognitionStarted": "openai_transcribe::recognition_started",
+    "ConnectFailure": "openai_transcribe::connect_failed",
+    "Connect": "openai_transcribe::connect",
+    "Error": "openai_transcribe::error"
+  },
+  "JambonzTranscriptionEvents": {
+    "Transcription": "jambonz_transcribe::transcription",
+    "ConnectFailure": "jambonz_transcribe::connect_failed",
+    "Connect": "jambonz_transcribe::connect",
+    "Error": "jambonz_transcribe::error"
+  },
+  "AssemblyAiTranscriptionEvents": {
+    "Transcription": "assemblyai_transcribe::transcription",
+    "Error": "assemblyai_transcribe::error",
+    "ConnectFailure": "assemblyai_transcribe::connect_failed",
+    "Connect": "assemblyai_transcribe::connect"
+  },
+  "HoundifyTranscriptionEvents": {
+    "Transcription": "houndify_transcribe::transcription",
+    "Error": "houndify_transcribe::error",
+    "ConnectFailure": "houndify_transcribe::connect_failed",
+    "Connect": "houndify_transcribe::connect"
+  },
+  "VoxistTranscriptionEvents": {
+    "Transcription": "voxist_transcribe::transcription",
+    "Error": "voxist_transcribe::error",
+    "ConnectFailure": "voxist_transcribe::connect_failed",
+    "Connect": "voxist_transcribe::connect"
+  },
+  "CartesiaTranscriptionEvents": {
+    "Transcription": "cartesia_transcribe::transcription",
+    "Error": "cartesia_transcribe::error",
+    "ConnectFailure": "cartesia_transcribe::connect_failed",
+    "Connect": "cartesia_transcribe::connect"
+  },
+  "VadDetection": {
+    "Detection": "vad_detect:detection"
+  },
+  "SileroVadDetection": {
+    "Detection": "vad_silero:detect"
+  },
+  "ListenEvents": {
+    "Connect": "mod_audio_fork::connect",
+    "ConnectFailure": "mod_audio_fork::connect_failed",
+    "Transcription": "mod_audio_fork::transcription",
+    "Transfer": "mod_audio_fork::transcription",
+    "PlayAudio": "mod_audio_fork::play_audio",
+    "KillAudio": "mod_audio_fork::kill_audio",
+    "Disconnect": "mod_audio_fork::disconnect",
+    "Error": "mod_audio_fork::error",
+    "BufferOverrun": "mod_audio_fork::buffer_overrun",
+    "JsonMessage": "mod_audio_fork::json"
+  },
+  "LifeCycleEvents" : {
+    "ScaleIn": "scale-in",
+    "StandbyEnter": "standby-enter",
+    "StandbyExit": "standby-exit"
+  },
+  "LlmEvents_OpenAI": {
+    "Error": "error",
+    "Connect": "openai_s2s::connect",
+    "ConnectFailure": "openai_s2s::connect_failed",
+    "Disconnect": "openai_s2s::disconnect",
+    "ServerEvent": "openai_s2s::server_event"
+  },
+  "LlmEvents_Google": {
+    "Error": "error",
+    "Connect": "google_s2s::connect",
+    "ConnectFailure": "google_s2s::connect_failed",
+    "Disconnect": "google_s2s::disconnect",
+    "ServerEvent": "google_s2s::server_event"
+  },
+  "LlmEvents_Elevenlabs": {
+    "Error": "error",
+    "Connect": "elevenlabs_s2s::connect",
+    "ConnectFailure": "elevenlabs_s2s::connect_failed",
+    "Disconnect": "elevenlabs_s2s::disconnect",
+    "ServerEvent": "elevenlabs_s2s::server_event"
+  },
+  "LlmEvents_VoiceAgent": {
+    "Error": "error",
+    "Connect": "voice_agent_s2s::connect",
+    "ConnectFailure": "voice_agent_s2s::connect_failed",
+    "Disconnect": "voice_agent_s2s::disconnect",
+    "ServerEvent": "voice_agent_s2s::server_event"
+  },
+  "LlmEvents_Ultravox": {
+    "Error": "error",
+    "Connect": "ultravox_s2s::connect",
+    "ConnectFailure": "ultravox_s2s::connect_failed",
+    "Disconnect": "ultravox_s2s::disconnect",
+    "ServerEvent": "ultravox_s2s::server_event"
+  },
+  "QueueResults": {
+    "Bridged": "bridged",
+    "Error": "error",
+    "Wait": "hangup",
+    "Leave": "leave"
+  },
+  "DequeueResults": {
+    "Bridged": "bridged",
+    "Error": "error",
+    "Hangup": "hangup",
+    "Timeout": "timeout"
+  },
+  "KillReason": {
+    "Hangup": "hangup",
+    "Replaced": "replaced",
+    "ReferComplete": "refer-complete",
+    "MediaTimeout": "media_timeout"
+  },
+  "HookMsgTypes": [
+    "session:new",
+    "session:reconnect",
+    "session:redirect",
+    "session:adulting",
+    "call:status",
+    "queue:status",
+    "dial:confirm",
+    "verb:hook",
+    "verb:status",
+    "llm:event",
+    "llm:tool-call",
+    "tts:tokens-result",
+    "tts:streaming-event",
+    "jambonz:error"
+  ],
+  "RecordState": {
+    "RecordingOn": "recording_on",
+    "RecordingOff": "recording_off",
+    "RecordingPaused": "recording_paused"
+  },
+  "AmdEvents": {
+    "NoSpeechDetected": "amd_no_speech_detected",
+    "HumanDetected": "amd_human_detected",
+    "MachineDetected": "amd_machine_detected",
+    "MachineStoppedSpeaking": "amd_machine_stopped_speaking",
+    "Error": "amd_error",
+    "DecisionTimeout": "amd_decision_timeout",
+    "ToneDetected": "amd_tone_detected",
+    "ToneTimeout": "amd_tone_timeout",
+    "Stopped": "amd_stopped"
+  },
+  "MediaPath": {
+    "NoMedia": "no-media",
+    "PartialMedia": "partial-media",
+    "FullMedia": "full-media"
+  },
+  "DeepgramTtsStreamingEvents": {
+    "Empty": "deepgram_tts_streaming::empty",
+    "ConnectFailure": "deepgram_tts_streaming::connect_failed",
+    "Connect": "deepgram_tts_streaming::connect"
+  },
+  "GoogleTtsStreamingEvents": {
+    "Empty": "google_tts_streaming::empty",
+    "ConnectFailure": "google_tts_streaming::connect_failed",
+    "Connect": "google_tts_streaming::connect"
+  },
+  "CartesiaTtsStreamingEvents": {
+    "Empty": "cartesia_tts_streaming::empty",
+    "ConnectFailure": "cartesia_tts_streaming::connect_failed",
+    "Connect": "cartesia_tts_streaming::connect"
+  },
+  "ElevenlabsTtsStreamingEvents": {
+    "Empty": "elevenlabs_tts_streaming::empty",
+    "ConnectFailure": "elevenlabs_tts_streaming::connect_failed",
+    "Connect": "elevenlabs_tts_streaming::connect"
+  },
+  "RimelabsTtsStreamingEvents": {
+    "Empty": "rimelabs_tts_streaming::empty",
+    "ConnectFailure": "rimelabs_tts_streaming::connect_failed",
+    "Connect": "rimelabs_tts_streaming::connect"
+  },
+  "CustomTtsStreamingEvents": {
+    "Empty": "custom_tts_streaming::empty",
+    "ConnectFailure": "custom_tts_streaming::connect_failed",
+    "Connect": "custom_tts_streaming::connect"
+  },
+  "TtsStreamingEvents": {
+    "Empty": "tts_streaming::empty",
+    "Pause": "tts_streaming::pause",
+    "Resume": "tts_streaming::resume",
+    "ConnectFailure": "tts_streaming::connect_failed",
+    "Connected": "tts_streaming::connected"
+  },
+  "TtsStreamingConnectionStatus": {
+    "NotConnected": "not_connected",
+    "Connected": "connected",
+    "Connecting": "connecting",
+    "Failed": "failed"
+  },
+  "MAX_SIMRINGS": 10,
+  "BONG_TONE": "tone_stream://v=-7;%(100,0,941.0,1477.0);v=-7;>=2;+=.1;%(1400,0,350,440)",
+  "FS_UUID_SET_NAME": "fsUUIDs",
+  "SystemState" : {
+    "Online": "ONLINE",
+    "Offline": "OFFLINE",
+    "GracefulShutdownInProgress":"SHUTDOWN_IN_PROGRESS"
+  },
+  "FEATURE_SERVER" : "feature-server",
+  "WS_CLOSE_CODES": {
+    "NormalClosure": 1000,
+    "GoingAway": 1001
+  },
+  "NON_FANTAL_ERRORS": [
+    "File Not Found"
+  ]
+}

@@ -1,0 +1,104 @@
+version: '3.9'
+networks:
+  fs:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.38.0.0/16
+
+services:
+  mysql:
+    image: mysql:5.7
+    platform: linux/x86_64
+    ports:
+      - "3360:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1", "--protocol", "tcp"]
+      timeout: 5s
+      retries: 10
+    networks:
+      fs:
+        ipv4_address: 172.38.0.5
+
+  redis:
+    image: redis:5-alpine
+    ports:
+      - "16379:6379/tcp"
+    depends_on:
+      - mysql
+    networks:
+      fs:
+        ipv4_address: 172.38.0.6
+
+  docker-host:
+    image: qoomon/docker-host
+    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+    mem_limit: 8M
+    restart: on-failure
+    networks:
+      fs:
+        ipv4_address: 172.38.0.7
+
+  drachtio:
+    image: drachtio/drachtio-server:0.8.26
+    restart: always
+    command: drachtio --contact "sip:*;transport=udp" --mtu 4096 --address 0.0.0.0 --port 9022
+    ports:
+      - "9060:9022/tcp"
+    networks:
+      fs:
+        ipv4_address: 172.38.0.50
+    depends_on:
+      mysql:
+        condition: service_healthy
+      freeswitch:
+        condition: service_healthy
+
+  freeswitch:
+    image: drachtio/drachtio-freeswitch-mrf:0.9.2-4
+    restart: always
+    command: freeswitch --rtp-range-start 20000 --rtp-range-end 20100
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/credentials/gcp.json
+    ports:
+      - "8022:8021/tcp"
+    volumes:
+      - /tmp:/tmp
+      - ./credentials:/opt/credentials
+    healthcheck:
+      test: ['CMD', 'fs_cli' ,'-p', 'JambonzR0ck$$', '-x', '"sofia status"']
+      timeout: 5s
+      retries: 15
+    networks:
+      fs:
+        ipv4_address: 172.38.0.51
+
+  webhook-scaffold:
+    image: jambonz/webhook-test-scaffold:latest
+    ports:
+      - "3100:3000/tcp"
+    volumes:
+      - ./test-apps:/tmp
+    networks:
+      fs:
+        ipv4_address: 172.38.0.60
+
+  influxdb:
+    image: influxdb:1.8
+    ports:
+      - "8086:8086"
+    networks:
+      fs:
+        ipv4_address: 172.38.0.90
+
+  squid:
+    image: ubuntu/squid:edge
+    ports:
+      - "3128:3128"
+    volumes:
+      - ./configuration/squid.conf:/etc/squid/squid.conf
+    networks:
+      fs:
+        ipv4_address: 172.38.0.91

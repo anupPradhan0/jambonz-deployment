@@ -1,0 +1,47 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'jambonz-platform'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+rule_files: []
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'jambonz-api-server'
+    static_configs:
+      - targets: ['api-server:3000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'jambonz-feature-server'
+    static_configs:
+      - targets: ['feature-server:3100']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'sbc-inbound'
+    static_configs:
+      - targets: ['sbc-inbound:5060']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'sbc-outbound'
+    static_configs:
+      - targets: ['sbc-outbound:5062']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'sbc-sip-sidecar'
+    static_configs:
+      - targets: ['sbc-sip-sidecar:5064']
+    metrics_path: '/metrics'
+    scrape_interval: 10s

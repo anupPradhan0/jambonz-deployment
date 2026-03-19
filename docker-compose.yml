@@ -1,0 +1,350 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: jambonz-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: jambones
+      MYSQL_USER: jambones
+      MYSQL_PASSWORD: jambones_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - jambonz-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: jambonz-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - jambonz-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      timeout: 3s
+      retries: 5
+
+  # Drachtio SIP Server
+  drachtio:
+    image: drachtio/drachtio-server:latest
+    container_name: jambonz-drachtio
+    ports:
+      # drachtio control port (apps connect here)
+      - "9022:9022"
+    environment:
+      DRACHTIO_SECRET: cymru
+    networks:
+      - jambonz-network
+    healthcheck:
+      # The image lacks common probing tools (nc/ss) and /dev/tcp is not supported by its /bin/sh.
+      # For local dev we treat "container is running" as healthy.
+      test: ["CMD-SHELL", "exit 0"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  # Prometheus for Metrics
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: jambonz-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - jambonz-network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  # InfluxDB (time-series database used by jambonz components)
+  influxdb:
+    image: influxdb:1.8
+    container_name: jambonz-influxdb
+    ports:
+      - "8086:8086"
+    networks:
+      - jambonz-network
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+
+  # FreeSWITCH (media server)
+  freeswitch:
+    image: drachtio/drachtio-freeswitch-mrf:latest
+    container_name: jambonz-freeswitch
+    # Expose ESL to host on 8022 (container listens on 8021)
+    ports:
+      - "8022:8021/tcp"
+    networks:
+      - jambonz-network
+
+  # Jambonz API Server
+  api-server:
+    build:
+      context: ./jambonz-api-server
+      dockerfile: Dockerfile
+    container_name: jambonz-api-server
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      HTTP_PORT: "3000"
+      API_SERVER_PORT: 3000
+      API_SERVER_HOST: 0.0.0.0
+      JAMBONES_MYSQL_HOST: mysql
+      JAMBONES_MYSQL_PORT: 3306
+      JAMBONES_MYSQL_USER: jambones
+      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_DATABASE: jambones
+      JAMBONES_REDIS_HOST: redis
+      JAMBONES_REDIS_PORT: 6379
+      JWT_SECRET: your-super-secret-jwt-key-change-this
+      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JAMBONES_TIME_SERIES_HOST: influxdb
+      JAMBONES_TIME_SERIES_PORT: 8086
+      JAMBONES_LOGLEVEL: info
+      K8S: "false"
+      K8S_FEATURE_SERVER_SERVICE_NAME: jambonz-feature-server
+      K8S_FEATURE_SERVER_SERVICE_PORT: 3100
+      AWS_REGION: us-east-1
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - jambonz-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3000/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 12
+      start_period: 120s
+
+  # Jambonz Webapp (provisioning UI) — browser talks to API on host :3000
+  webapp:
+    build:
+      context: ./jambonz-webapp
+      dockerfile: Dockerfile
+    container_name: jambonz-webapp
+    ports:
+      - "3001:3001"
+    environment:
+      HTTP_PORT: "3001"
+      # Must be reachable from the user's browser (API published on host 3000)
+      API_BASE_URL: http://localhost:3000/v1
+    depends_on:
+      api-server:
+        condition: service_healthy
+    networks:
+      - jambonz-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/"]
+      timeout: 10s
+      retries: 8
+      start_period: 60s
+
+  # Jambonz Feature Server
+  feature-server:
+    build:
+      context: ./jambonz-feature-server
+      dockerfile: Dockerfile
+    container_name: jambonz-feature-server
+    ports:
+      - "3100:3100"
+    environment:
+      JAMBONES_LOGLEVEL: info
+      FEATURE_SERVER_PORT: 3100
+      FEATURE_SERVER_HOST: 0.0.0.0
+      HTTP_PORT: 3100
+      JWT_SECRET: your-super-secret-jwt-key-change-this
+      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JAMBONES_MYSQL_HOST: mysql
+      JAMBONES_MYSQL_PORT: 3306
+      JAMBONES_MYSQL_USER: jambones
+      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_DATABASE: jambones
+      JAMBONES_REDIS_HOST: redis
+      JAMBONES_REDIS_PORT: 6379
+      DRACHTIO_HOST: drachtio
+      DRACHTIO_PORT: 9022
+      DRACHTIO_SECRET: cymru
+      JAMBONES_SBCS: sbc-inbound
+      # FreeSWITCH ESL runs on 8021 inside the docker network
+      JAMBONES_FREESWITCH: freeswitch:8021:JambonzR0ck$:docker-host
+      JAMBONES_TIME_SERIES_HOST: influxdb
+      JAMBONES_TIME_SERIES_PORT: 8086
+      ENABLE_METRICS: "1"
+      HTTP_POOL: "1"
+      JAMBONES_HOSTING: "1"
+      JAMBONES_TTS_TRIM_SILENCE: "1"
+      JAMBONES_NETWORK_CIDR: 10.0.0.0/8
+      RTP_PORT_MIN: 16000
+      RTP_PORT_MAX: 32000
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      drachtio:
+        condition: service_healthy
+    networks:
+      - jambonz-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3100/health"]
+      timeout: 10s
+      retries: 5
+
+  # SBC Inbound
+  sbc-inbound:
+    build:
+      context: ./sbc-inbound
+      dockerfile: Dockerfile
+    container_name: jambonz-sbc-inbound
+    ports:
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+      - "5061:5061/tcp"
+    environment:
+      SBC_INBOUND_PORT: 5060
+      SBC_INBOUND_HOST: 0.0.0.0
+      SBC_INBOUND_WS_PORT: 5061
+      JWT_SECRET: your-super-secret-jwt-key-change-this
+      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JAMBONES_MYSQL_HOST: mysql
+      JAMBONES_MYSQL_PORT: 3306
+      JAMBONES_MYSQL_USER: jambones
+      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_DATABASE: jambones
+      JAMBONES_REDIS_HOST: redis
+      JAMBONES_REDIS_PORT: 6379
+      JAMBONES_LOGLEVEL: info
+      DRACHTIO_HOST: drachtio
+      DRACHTIO_PORT: 9022
+      DRACHTIO_SECRET: cymru
+      JAMBONES_FEATURE_SERVER_HOST: feature-server
+      JAMBONES_FEATURE_SERVER_PORT: 3100
+      JAMBONES_TIME_SERIES_HOST: influxdb
+      JAMBONES_TIME_SERIES_PORT: 8086
+      ENABLE_METRICS: "1"
+      JAMBONES_NETWORK_CIDR: 10.0.0.0/8
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      drachtio:
+        condition: service_healthy
+    networks:
+      - jambonz-network
+    healthcheck:
+      test: ["CMD", "bash", "liveness.sh"]
+      timeout: 10s
+      retries: 5
+
+  # SBC Outbound
+  sbc-outbound:
+    build:
+      context: ./sbc-outbound
+      dockerfile: Dockerfile
+    container_name: jambonz-sbc-outbound
+    ports:
+      - "5062:5062/udp"
+      - "5062:5062/tcp"
+      - "5063:5063/tcp"
+    environment:
+      SBC_OUTBOUND_PORT: 5062
+      SBC_OUTBOUND_HOST: 0.0.0.0
+      SBC_OUTBOUND_WS_PORT: 5063
+      JWT_SECRET: your-super-secret-jwt-key-change-this
+      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JAMBONES_MYSQL_HOST: mysql
+      JAMBONES_MYSQL_PORT: 3306
+      JAMBONES_MYSQL_USER: jambones
+      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_DATABASE: jambones
+      JAMBONES_REDIS_HOST: redis
+      JAMBONES_REDIS_PORT: 6379
+      JAMBONES_LOGLEVEL: info
+      DRACHTIO_HOST: drachtio
+      DRACHTIO_PORT: 9022
+      DRACHTIO_SECRET: cymru
+      JAMBONES_FEATURE_SERVER_HOST: feature-server
+      JAMBONES_FEATURE_SERVER_PORT: 3100
+      JAMBONES_TIME_SERIES_HOST: influxdb
+      JAMBONES_TIME_SERIES_PORT: 8086
+      ENABLE_METRICS: "1"
+      JAMBONES_NETWORK_CIDR: 10.0.0.0/8
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      drachtio:
+        condition: service_healthy
+    networks:
+      - jambonz-network
+    healthcheck:
+      test: ["CMD", "bash", "liveness.sh"]
+      timeout: 10s
+      retries: 5
+
+  # SBC SIP Sidecar
+  sbc-sip-sidecar:
+    build:
+      context: ./sbc-sip-sidecar
+      dockerfile: Dockerfile
+    container_name: jambonz-sbc-sip-sidecar
+    ports:
+      - "5064:5064/tcp"
+    environment:
+      SBC_SIP_SIDECAR_PORT: 5064
+      SBC_SIP_SIDECAR_HOST: 0.0.0.0
+      JWT_SECRET: your-super-secret-jwt-key-change-this
+      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JAMBONES_MYSQL_HOST: mysql
+      JAMBONES_MYSQL_PORT: 3306
+      JAMBONES_MYSQL_USER: jambones
+      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_DATABASE: jambones
+      JAMBONES_REDIS_HOST: redis
+      JAMBONES_REDIS_PORT: 6379
+      JAMBONES_LOGLEVEL: info
+      DRACHTIO_HOST: drachtio
+      DRACHTIO_PORT: 9022
+      DRACHTIO_SECRET: cymru
+      JAMBONES_FEATURE_SERVER_HOST: feature-server
+      JAMBONES_FEATURE_SERVER_PORT: 3100
+      JAMBONES_TIME_SERIES_HOST: influxdb
+      JAMBONES_TIME_SERIES_PORT: 8086
+      ENABLE_METRICS: "1"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      drachtio:
+        condition: service_healthy
+    networks:
+      - jambonz-network
+
+volumes:
+  mysql_data:
+  redis_data:
+  prometheus_data:
+  influxdb_data:
+
+networks:
+  jambonz-network:
+    driver: bridge

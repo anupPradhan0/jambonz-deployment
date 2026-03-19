@@ -1,0 +1,186 @@
+@use "sass:color";
+@use "./forms";
+// @use "./cards";
+@use "./lists";
+@use "./smsel";
+@use "./inpbtn";
+@use "./filters";
+@use "./grid";
+@use "@jambonz/ui-kit/src/styles/index";
+
+@use "./vars";
+@use "./mixins";
+@use "@jambonz/ui-kit/src/styles/vars" as ui-vars;
+@use "@jambonz/ui-kit/src/styles/mixins" as ui-mixins;
+
+/** Root custom vars */
+:root {
+  --mobile-media: #{vars.$widthbreak};
+}
+
+/** Global elements */
+pre,
+code {
+  @include mixins.code();
+}
+
+pre {
+  padding: ui-vars.$px03;
+  color: ui-vars.$pink;
+  background-color: ui-vars.$dark;
+  border-radius: ui-vars.$px01;
+  overflow: auto;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 2;
+  hyphens: none;
+}
+
+p > code {
+  padding: ui-vars.$px00;
+  color: ui-vars.$pink;
+  background-color: ui-vars.$dark;
+  border-radius: ui-vars.$px00;
+}
+
+details {
+  padding: ui-vars.$px02;
+  border-radius: ui-vars.$px01;
+  border: 2px solid ui-vars.$dark;
+  max-width: vars.$widthinput;
+
+  /** Used for recent calls */
+  &.clean {
+    padding: 0;
+    border: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /** Used on the speech credentials form */
+  &.fail {
+    color: ui-vars.$jambonz;
+    border: 2px solid ui-vars.$jambonz;
+    background-color: ui-vars.$pink;
+  }
+
+  &.ok {
+    color: ui-vars.$teal;
+    border: 2px solid ui-vars.$teal;
+    background-color: color.mix(ui-vars.$white, ui-vars.$teal, 95%);
+  }
+
+  &.not-tested {
+    color: vars.$jeangrey;
+    border: 2px solid vars.$jeangrey;
+  }
+
+  summary {
+    cursor: pointer;
+    @include ui-mixins.m();
+
+    + * {
+      margin-top: ui-vars.$px02;
+    }
+
+    > div {
+      display: inline-block;
+      padding-left: ui-vars.$px00;
+      vertical-align: top;
+    }
+  }
+}
+
+/** Could go in @jambonz/ui-kit */
+.txt--dark {
+  color: ui-vars.$dark;
+}
+
+.txt--jean {
+  color: vars.$jeangrey;
+}
+
+/** The idea is this is like [type="button"] generically */
+/** We need to prohibit some @jambonz/ui-kit buttons from submitting forms */
+/** Otherwise this selector would just be `button[type="button"] {...}` */
+/** https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#attr-type */
+.btnty {
+  background-color: transparent;
+  width: auto;
+  height: auto;
+  border: 0;
+  padding: 0;
+  font-size: 0;
+}
+
+.btns--spaced {
+  > :last-child {
+    margin-left: auto;
+  }
+}
+
+/** 404 page (login & internal) */
+.notfound {
+  .btn {
+    margin-top: ui-vars.$px03;
+  }
+
+  &--login {
+    text-align: center;
+  }
+}
+
+/** Small inline spinners */
+.ispin {
+  display: flex;
+  align-items: center;
+  grid-gap: ui-vars.$px01;
+}
+
+/** Internal page titles */
+.mast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .ico {
+    @include mixins.icosize();
+  }
+}
+
+/** Used on phone numbers list */
+.mass-edit {
+  padding: ui-vars.$px00 0;
+
+  label {
+    @include ui-mixins.ms();
+  }
+}
+
+/** Used for recent-calls */
+.pre-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-row-gap: ui-vars.$px01;
+  grid-column-gap: ui-vars.$px03;
+  text-align: left;
+  padding: ui-vars.$px03;
+  color: ui-vars.$pink;
+  background-color: ui-vars.$dark;
+  border-radius: ui-vars.$px01;
+  margin-top: ui-vars.$px02;
+  @include mixins.code();
+}
+
+.pre-grid-white {
+  @extend .pre-grid;
+  background-color: ui-vars.$white;
+  color: ui-vars.$dark;
+  font-size: 1.2em;
+}
+
+.pcap {
+  margin-top: ui-vars.$px02;
+}

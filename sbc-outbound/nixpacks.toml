@@ -1,0 +1,50 @@
+# Nixpacks configuration for SBC Outbound
+# Session Border Controller for handling outgoing SIP traffic
+
+[build]
+# Node.js version
+nodeVersion = "18"
+
+[build.env]
+# Build-time environment variables
+NPM_CONFIG_LOGLEVEL = "warn"
+
+[start]
+# Start command for SBC outbound
+cmd = "node app.js"
+
+[env]
+# Runtime environment variables
+SBC_OUTBOUND_PORT = "5062"
+SBC_OUTBOUND_HOST = "0.0.0.0"
+SBC_OUTBOUND_WS_PORT = "5063"
+JAMBONES_MYSQL_HOST = "mysql"
+JAMBONES_MYSQL_PORT = "3306"
+JAMBONES_MYSQL_USER = "jambones"
+JAMBONES_MYSQL_DATABASE = "jambones"
+JAMBONES_REDIS_HOST = "redis"
+JAMBONES_REDIS_PORT = "6379"
+JAMBONES_LOGLEVEL = "info"
+DRACHTIO_HOST = "drachtio"
+DRACHTIO_PORT = "9060"
+DRACHTIO_SECRET = "cymru"
+JAMBONES_FEATURE_SERVER_HOST = "jambonz-feature-server"
+JAMBONES_FEATURE_SERVER_PORT = "3100"
+JAMBONES_TIME_SERIES_HOST = "prometheus"
+JAMBONES_TIME_SERIES_PORT = "9090"
+ENABLE_METRICS = "1"
+JAMBONES_NETWORK_CIDR = "10.0.0.0/8"
+
+[ports]
+# Expose SIP signaling ports
+5062 = { port = 5062, protocol = "udp" }
+5062 = { port = 5062, protocol = "tcp" }
+5063 = { port = 5063, protocol = "tcp" }
+
+[health]
+# Health check using the liveness script
+cmd = "bash liveness.sh"
+startPeriod = 30
+interval = 10
+timeout = 5
+retries = 3

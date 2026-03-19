@@ -1,0 +1,220 @@
+// PM2 Ecosystem Configuration for Jambonz Platform
+// This configuration allows running all services locally using PM2
+
+module.exports = {
+  apps: [
+    // API Server
+    {
+      name: 'jambonz-api-server',
+      script: './jambonz-api-server/app.js',
+      instances: 1,
+      exec_mode: 'cluster',
+      env: {
+        NODE_ENV: 'production',
+        API_SERVER_PORT: 3000,
+        API_SERVER_HOST: '0.0.0.0',
+        JAMBONES_MYSQL_HOST: 'localhost',
+        JAMBONES_MYSQL_PORT: 3306,
+        JAMBONES_MYSQL_USER: 'jambones',
+        JAMBONES_MYSQL_PASSWORD: 'jambones_password',
+        JAMBONES_MYSQL_DATABASE: 'jambones',
+        JAMBONES_REDIS_HOST: 'localhost',
+        JAMBONES_REDIS_PORT: 6379,
+        JWT_SECRET: 'your-super-secret-jwt-key-change-this',
+        ENCRYPTION_SECRET: 'your-encryption-secret-change-this',
+        JAMBONES_LOGLEVEL: 'info',
+        K8S: 'false',
+        K8S_FEATURE_SERVER_SERVICE_NAME: 'localhost',
+        K8S_FEATURE_SERVER_SERVICE_PORT: 3100,
+        AWS_REGION: 'us-east-1'
+      },
+      error_file: './logs/api-server-error.log',
+      out_file: './logs/api-server-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true,
+      autorestart: true,
+      max_restarts: 10,
+      min_uptime: '10s'
+    },
+
+    // Jambonz Webapp (dev: Vite on 3001 → API at localhost:3000)
+    {
+      name: 'jambonz-webapp',
+      cwd: './jambonz-webapp',
+      script: 'npm',
+      args: 'run dev',
+      interpreter: 'none',
+      exec_mode: 'fork',
+      env: {
+        NODE_ENV: 'development',
+        VITE_API_BASE_URL: 'http://127.0.0.1:3000/v1',
+        VITE_DEV_BASE_URL: 'http://127.0.0.1:3000/v1'
+      },
+      error_file: './logs/webapp-error.log',
+      out_file: './logs/webapp-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true,
+      autorestart: true,
+      max_restarts: 10,
+      min_uptime: '10s'
+    },
+
+    // Feature Server
+    {
+      name: 'jambonz-feature-server',
+      script: './jambonz-feature-server/app.js',
+      instances: 1,
+      exec_mode: 'cluster',
+      env: {
+        JWT_SECRET: 'your-super-secret-jwt-key-change-this',
+        ENCRYPTION_SECRET: 'your-encryption-secret-change-this',
+        JAMBONES_LOGLEVEL: 'info',
+        FEATURE_SERVER_PORT: 3100,
+        FEATURE_SERVER_HOST: '0.0.0.0',
+        JAMBONES_MYSQL_HOST: 'localhost',
+        JAMBONES_MYSQL_PORT: 3306,
+        JAMBONES_MYSQL_USER: 'jambones',
+        JAMBONES_MYSQL_PASSWORD: 'jambones_password',
+        JAMBONES_MYSQL_DATABASE: 'jambones',
+        JAMBONES_REDIS_HOST: 'localhost',
+        JAMBONES_REDIS_PORT: 6379,
+        DRACHTIO_HOST: 'localhost',
+        DRACHTIO_PORT: 9060,
+        DRACHTIO_SECRET: 'cymru',
+        JAMBONES_SBCS: 'localhost',
+        JAMBONES_FREESWITCH: 'localhost:8022:JambonzR0ck$:docker-host',
+        JAMBONES_TIME_SERIES_HOST: 'localhost',
+        JAMBONES_TIME_SERIES_PORT: 8086,
+        ENABLE_METRICS: 1,
+        HTTP_POOL: 1,
+        JAMBONES_HOSTING: 1,
+        JAMBONES_TTS_TRIM_SILENCE: 1,
+        JAMBONES_NETWORK_CIDR: '10.0.0.0/8',
+        RTP_PORT_MIN: 16000,
+        RTP_PORT_MAX: 32000
+      },
+      error_file: './logs/feature-server-error.log',
+      out_file: './logs/feature-server-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true,
+      autorestart: true,
+      max_restarts: 10,
+      min_uptime: '10s'
+    },
+
+    // SBC Inbound
+    {
+      name: 'sbc-inbound',
+      script: './sbc-inbound/app.js',
+      instances: 1,
+      exec_mode: 'cluster',
+      env: {
+        JWT_SECRET: 'your-super-secret-jwt-key-change-this',
+        ENCRYPTION_SECRET: 'your-encryption-secret-change-this',
+        SBC_INBOUND_PORT: 5060,
+        SBC_INBOUND_HOST: '0.0.0.0',
+        SBC_INBOUND_WS_PORT: 5061,
+        JAMBONES_MYSQL_HOST: 'localhost',
+        JAMBONES_MYSQL_PORT: 3306,
+        JAMBONES_MYSQL_USER: 'jambones',
+        JAMBONES_MYSQL_PASSWORD: 'jambones_password',
+        JAMBONES_MYSQL_DATABASE: 'jambones',
+        JAMBONES_REDIS_HOST: 'localhost',
+        JAMBONES_REDIS_PORT: 6379,
+        JAMBONES_LOGLEVEL: 'info',
+        DRACHTIO_HOST: 'localhost',
+        DRACHTIO_PORT: 9060,
+        DRACHTIO_SECRET: 'cymru',
+        JAMBONES_FEATURE_SERVER_HOST: 'localhost',
+        JAMBONES_FEATURE_SERVER_PORT: 3100,
+        JAMBONES_TIME_SERIES_HOST: 'localhost',
+        JAMBONES_TIME_SERIES_PORT: 8086,
+        ENABLE_METRICS: 1,
+        JAMBONES_NETWORK_CIDR: '10.0.0.0/8'
+      },
+      error_file: './logs/sbc-inbound-error.log',
+      out_file: './logs/sbc-inbound-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true,
+      autorestart: true,
+      max_restarts: 10,
+      min_uptime: '10s'
+    },
+
+    // SBC Outbound
+    {
+      name: 'sbc-outbound',
+      script: './sbc-outbound/app.js',
+      instances: 1,
+      exec_mode: 'cluster',
+      env: {
+        JWT_SECRET: 'your-super-secret-jwt-key-change-this',
+        ENCRYPTION_SECRET: 'your-encryption-secret-change-this',
+        SBC_OUTBOUND_PORT: 5062,
+        SBC_OUTBOUND_HOST: '0.0.0.0',
+        SBC_OUTBOUND_WS_PORT: 5063,
+        JAMBONES_MYSQL_HOST: 'localhost',
+        JAMBONES_MYSQL_PORT: 3306,
+        JAMBONES_MYSQL_USER: 'jambones',
+        JAMBONES_MYSQL_PASSWORD: 'jambones_password',
+        JAMBONES_MYSQL_DATABASE: 'jambones',
+        JAMBONES_REDIS_HOST: 'localhost',
+        JAMBONES_REDIS_PORT: 6379,
+        JAMBONES_LOGLEVEL: 'info',
+        DRACHTIO_HOST: 'localhost',
+        DRACHTIO_PORT: 9060,
+        DRACHTIO_SECRET: 'cymru',
+        JAMBONES_FEATURE_SERVER_HOST: 'localhost',
+        JAMBONES_FEATURE_SERVER_PORT: 3100,
+        JAMBONES_TIME_SERIES_HOST: 'localhost',
+        JAMBONES_TIME_SERIES_PORT: 8086,
+        ENABLE_METRICS: 1,
+        JAMBONES_NETWORK_CIDR: '10.0.0.0/8'
+      },
+      error_file: './logs/sbc-outbound-error.log',
+      out_file: './logs/sbc-outbound-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true,
+      autorestart: true,
+      max_restarts: 10,
+      min_uptime: '10s'
+    },
+
+    // SBC SIP Sidecar
+    {
+      name: 'sbc-sip-sidecar',
+      script: './sbc-sip-sidecar/app.js',
+      instances: 1,
+      exec_mode: 'cluster',
+      env: {
+        JWT_SECRET: 'your-super-secret-jwt-key-change-this',
+        ENCRYPTION_SECRET: 'your-encryption-secret-change-this',
+        SBC_SIP_SIDECAR_PORT: 5064,
+        SBC_SIP_SIDECAR_HOST: '0.0.0.0',
+        JAMBONES_MYSQL_HOST: 'localhost',
+        JAMBONES_MYSQL_PORT: 3306,
+        JAMBONES_MYSQL_USER: 'jambones',
+        JAMBONES_MYSQL_PASSWORD: 'jambones_password',
+        JAMBONES_MYSQL_DATABASE: 'jambones',
+        JAMBONES_REDIS_HOST: 'localhost',
+        JAMBONES_REDIS_PORT: 6379,
+        JAMBONES_LOGLEVEL: 'info',
+        DRACHTIO_HOST: 'localhost',
+        DRACHTIO_PORT: 9060,
+        DRACHTIO_SECRET: 'cymru',
+        JAMBONES_FEATURE_SERVER_HOST: 'localhost',
+        JAMBONES_FEATURE_SERVER_PORT: 3100,
+        JAMBONES_TIME_SERIES_HOST: 'localhost',
+        JAMBONES_TIME_SERIES_PORT: 8086,
+        ENABLE_METRICS: 1
+      },
+      error_file: './logs/sbc-sip-sidecar-error.log',
+      out_file: './logs/sbc-sip-sidecar-out.log',
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true,
+      autorestart: true,
+      max_restarts: 10,
+      min_uptime: '10s'
+    }
+  ]
+};

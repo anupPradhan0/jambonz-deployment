@@ -1,0 +1,44 @@
+name: PR Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  pr-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node_modules
+        id: node-cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Cache cypress binary
+        id: cypress-cache
+        uses: actions/cache@v3
+        with:
+          path: /home/runner/.cache/Cypress
+          key: cypress-${{ hashFiles('package-lock.json') }}
+
+      - name: Install node_modules
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Install cypress
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
+        run: npx cypress install
+
+      - name: Run checks
+        run: |
+          npm run format
+          npm run lint
+          npm run test
+          npm run build

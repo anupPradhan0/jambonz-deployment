@@ -1,0 +1,124 @@
+@use "src/styles/vars";
+@use "src/styles/mixins";
+@use "@jambonz/ui-kit/src/styles/vars" as ui-vars;
+
+.barGroup {
+  border-radius: ui-vars.$px01;
+  text-align: left;
+  padding: ui-vars.$px03;
+  color: ui-vars.$pink;
+  background-color: ui-vars.$dark;
+  border-radius: ui-vars.$px01;
+  margin-top: ui-vars.$px02;
+  overflow-x: auto;
+  overflow-y: scroll;
+  @include mixins.code();
+
+  @media (max-width: 600px) {
+    padding: 15px;
+    height: 40vh;
+  }
+}
+
+.barWrapper {
+  width: 100%;
+
+  &__row {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &__row:hover {
+    font-weight: bolder;
+    color: ui-vars.$purple;
+  }
+
+  &__row:hover button {
+    font-weight: bolder;
+    background-color: ui-vars.$purple;
+    cursor: pointer;
+  }
+
+  &__header {
+    min-width: 400px;
+    height: 15px;
+    padding-top: 4px;
+    font-size: small;
+
+    @media (max-width: 600px) {
+      padding-top: 4px;
+      min-width: 250px;
+      font-size: x-small;
+    }
+  }
+
+  &__span {
+    padding-top: 4px;
+    height: 5px;
+    flex-shrink: 0;
+    vertical-align: middle;
+    border: 3px solid #444;
+    border-radius: 8px;
+    background-color: ui-vars.$jambonz;
+    min-width: 6px;
+  }
+
+  &__duration {
+    margin: 5px;
+    min-width: 150px;
+  }
+}
+
+.spanDetailsWrapper {
+  border-radius: ui-vars.$px01;
+  text-align: left;
+  padding: ui-vars.$px01;
+  background-color: ui-vars.$white;
+  border-radius: ui-vars.$px01;
+  color: ui-vars.$dark;
+  font-size: ui-vars.$mxs-size;
+  max-width: ui-vars.$width-tablet-2;
+  max-height: 500px;
+  overflow-y: scroll;
+  @include mixins.code();
+
+  &__detailsWrapper {
+    height: 100%;
+    padding: 10px;
+    font-size: 0.9em;
+
+    @media (max-width: 600px) {
+      padding: 5px;
+      font-size: 0.7em;
+    }
+
+    @media (min-width: 600px) {
+      padding: 15px;
+      font-size: 0.9em;
+    }
+  }
+
+  &__details {
+    display: flex;
+  }
+
+  &__details_header {
+    padding: 3px;
+    min-width: 150px;
+  }
+
+  &__details_body {
+    flex-grow: 1;
+    white-space: pre-line;
+    padding: 2px;
+    width: 100%;
+  }
+
+  &__header {
+    background-color: ui-vars.$white;
+    color: ui-vars.$jambonz;
+    padding: 5px 10px 10px 10px;
+    border-bottom: thin solid ui-vars.$grey;
+  }
+}

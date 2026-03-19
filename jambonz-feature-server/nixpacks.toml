@@ -1,0 +1,52 @@
+# Nixpacks configuration for Jambonz Feature Server
+# This configuration builds the feature server as a containerized application
+
+[build]
+# Node.js version
+nodeVersion = "18"
+
+[build.env]
+# Build-time environment variables
+NPM_CONFIG_LOGLEVEL = "warn"
+
+[start]
+# Start command for the feature server
+cmd = "node app.js"
+
+[env]
+# Runtime environment variables - customize these for your deployment
+JAMBONES_LOGLEVEL = "info"
+FEATURE_SERVER_PORT = "3100"
+FEATURE_SERVER_HOST = "0.0.0.0"
+JAMBONES_MYSQL_HOST = "mysql"
+JAMBONES_MYSQL_PORT = "3306"
+JAMBONES_MYSQL_USER = "jambones"
+JAMBONES_MYSQL_DATABASE = "jambones"
+JAMBONES_REDIS_HOST = "redis"
+JAMBONES_REDIS_PORT = "6379"
+DRACHTIO_HOST = "drachtio"
+DRACHTIO_PORT = "9060"
+DRACHTIO_SECRET = "cymru"
+JAMBONES_SBCS = "sbc-inbound"
+JAMBONES_FREESWITCH = "freeswitch:8022:JambonzR0ck$:docker-host"
+JAMBONES_TIME_SERIES_HOST = "prometheus"
+JAMBONES_TIME_SERIES_PORT = "9090"
+ENABLE_METRICS = "1"
+HTTP_POOL = "1"
+JAMBONES_HOSTING = "1"
+JAMBONES_TTS_TRIM_SILENCE = "1"
+JAMBONES_NETWORK_CIDR = "10.0.0.0/8"
+RTP_PORT_MIN = "16000"
+RTP_PORT_MAX = "32000"
+
+[ports]
+# Expose port 3100 for feature server
+3100 = { port = 3100, protocol = "tcp" }
+
+[health]
+# Health check configuration
+cmd = "curl -f http://localhost:3100/health || exit 1"
+startPeriod = 30
+interval = 10
+timeout = 5
+retries = 3

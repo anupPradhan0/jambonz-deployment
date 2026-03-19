@@ -1,0 +1,4588 @@
+{
+  "resourceSpans": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "jb/Lj6EF/UA=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842566615000000",
+              "endTimeUnixNano": "1684842566615071000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "CQiu+3VVLOQ=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:gather{inputs=speech,vendor=google,language=en-US}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842583297000000",
+              "endTimeUnixNano": "1684842587808783000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "gather{inputs=speech,vendor=google,language=en-US}"
+                  }
+                },
+                { "key": "stt.resolve", "value": { "stringValue": "speech" } },
+                {
+                  "key": "stt.result",
+                  "value": {
+                    "stringValue": "{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":true,\"alternatives\":[{\"confidence\":0.9747781157493591,\"transcript\":\"Smith\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0,\"is_final\":true,\"alternatives\":[{\"confidence\":0.9747781157493591,\"transcript\":\"Smith\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3630}}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "uTjOYLJm5g8=",
+              "parentSpanId": "vQ14fRFBEjY=",
+              "name": "verb:hook (voice)",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842636170000000",
+              "endTimeUnixNano": "1684842636173657000",
+              "attributes": [
+                {
+                  "key": "http.body",
+                  "value": {
+                    "stringValue": "{\"callSid\":\"767465fe-77a9-4113-9857-0ad7e8f76544\",\"direction\":\"inbound\",\"from\":\"+15083084809\",\"to\":\"+15086908019\",\"callId\":\"ae40a455-7402-123c-628c-161343ac42f3\",\"sipStatus\":200,\"sipReason\":\"OK\",\"callStatus\":\"in-progress\",\"accountSid\":\"9351f46a-678c-43f5-b8a6-d4eb58d131af\",\"traceId\":\"771bc318bdadd530b133b6f7e8f22fc8\",\"applicationSid\":\"66381298-c034-4d77-9a53-4bc2fdd8a420\",\"fsSipAddress\":\"10.0.214.82:5070\",\"originatingSipIp\":\"54.172.60.3\",\"originatingSipTrunkName\":\"Twilio\",\"apiBaseUrl\":\"http://34.202.214.124/v1\",\"speech\":{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":true,\"alternatives\":[{\"confidence\":0.9411184191703796,\"transcript\":\"will my CPAP machine is blinking and there's a red light that's turned on and I'm not sure if I just need to replace the battery or it's something more significance and you need to send someone else\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0,\"is_final\":true,\"alternatives\":[{\"confidence\":0.9411184191703796,\"transcript\":\"will my CPAP machine is blinking and there's a red light that's turned on and I'm not sure if I just need to replace the battery or it's something more significance and you need to send someone else\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":12470}}},\"reason\":\"speechDetected\"}"
+                  }
+                },
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "TyPv+KnzEVY=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "background-listen:listen",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554220000000",
+              "endTimeUnixNano": "1684842642396340000",
+              "attributes": [
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "W4uWrMygETs=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-C},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554129000000",
+              "endTimeUnixNano": "1684842554129348000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-C},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "yKdO7XpUVL8=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:gather{inputs=speech,vendor=google,language=en-US}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842571751000000",
+              "endTimeUnixNano": "1684842575914093000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "gather{inputs=speech,vendor=google,language=en-US}"
+                  }
+                },
+                { "key": "stt.resolve", "value": { "stringValue": "speech" } },
+                {
+                  "key": "stt.result",
+                  "value": {
+                    "stringValue": "{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":true,\"alternatives\":[{\"confidence\":0.6081536412239075,\"transcript\":\"Tom\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0,\"is_final\":true,\"alternatives\":[{\"confidence\":0.6081536412239075,\"transcript\":\"Tom\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3160}}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "Un4NG8RXyxw=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842580581000000",
+              "endTimeUnixNano": "1684842580581049000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "7eDyiHL13rc=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{enable barge-in,set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842587919000000",
+              "endTimeUnixNano": "1684842587919528000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{enable barge-in,set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "kWBmHK/pYJg=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "background-gather:gather{inputs=speech,vendor=google,language=en-US}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842587920000000",
+              "endTimeUnixNano": "1684842592314506000",
+              "attributes": [
+                { "key": "stt.resolve", "value": { "stringValue": "speech" } },
+                {
+                  "key": "stt.result",
+                  "value": {
+                    "stringValue": "{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0.009999999776482582,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":4120}}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "sCG1hoUM5rY=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842620756000000",
+              "endTimeUnixNano": "1684842620756099000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "vQ14fRFBEjY=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:gather{inputs=speech,vendor=google,language=en-US}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842622537000000",
+              "endTimeUnixNano": "1684842636172923000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "gather{inputs=speech,vendor=google,language=en-US}"
+                  }
+                },
+                { "key": "stt.resolve", "value": { "stringValue": "speech" } },
+                {
+                  "key": "stt.result",
+                  "value": {
+                    "stringValue": "{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":true,\"alternatives\":[{\"confidence\":0.9411184191703796,\"transcript\":\"will my CPAP machine is blinking and there's a red light that's turned on and I'm not sure if I just need to replace the battery or it's something more significance and you need to send someone else\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0,\"is_final\":true,\"alternatives\":[{\"confidence\":0.9411184191703796,\"transcript\":\"will my CPAP machine is blinking and there's a red light that's turned on and I'm not sure if I just need to replace the battery or it's something more significance and you need to send someone else\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":12470}}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "RMlX6B91jpc=",
+              "parentSpanId": "oP+aJRANMEo=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842641672000000",
+              "endTimeUnixNano": "1684842641673565000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "qbISe1Lp1Oc=",
+              "parentSpanId": "AAAAAAAAAAA=",
+              "name": "incoming-call",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554080000000",
+              "endTimeUnixNano": "1684842642417116000",
+              "attributes": [
+                {
+                  "key": "callSid",
+                  "value": {
+                    "stringValue": "767465fe-77a9-4113-9857-0ad7e8f76544"
+                  }
+                },
+                {
+                  "key": "accountSid",
+                  "value": {
+                    "stringValue": "9351f46a-678c-43f5-b8a6-d4eb58d131af"
+                  }
+                },
+                {
+                  "key": "applicationSid",
+                  "value": {
+                    "stringValue": "66381298-c034-4d77-9a53-4bc2fdd8a420"
+                  }
+                },
+                {
+                  "key": "callId",
+                  "value": {
+                    "stringValue": "ae40a455-7402-123c-628c-161343ac42f3"
+                  }
+                },
+                {
+                  "key": "externalCallId",
+                  "value": {
+                    "stringValue": "ee7a0927c4fda9f246a47cf117bd92f3@0.0.0.0"
+                  }
+                },
+                { "key": "finalStatus", "value": { "doubleValue": 200 } },
+                {
+                  "key": "call.termination",
+                  "value": { "stringValue": "hangup by caller" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "KdPQRCkxaw4=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{enable barge-in,set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842576025000000",
+              "endTimeUnixNano": "1684842576025502000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{enable barge-in,set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "MPby2sfn2Pk=",
+              "parentSpanId": "1heKgIuaYzM=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842580582000000",
+              "endTimeUnixNano": "1684842580584114000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "1heKgIuaYzM=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>Great! P...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842580581000000",
+              "endTimeUnixNano": "1684842583296462000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>Great! P...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "C20bpgpHMQI=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>Thank yo...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842592512000000",
+              "endTimeUnixNano": "1684842593419270000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>Thank yo...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "o9poulJJqy4=",
+              "parentSpanId": "4wHCFczasyc=",
+              "name": "verb:hook (voice)",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842613799000000",
+              "endTimeUnixNano": "1684842613803001000",
+              "attributes": [
+                {
+                  "key": "http.body",
+                  "value": {
+                    "stringValue": "{\"callSid\":\"767465fe-77a9-4113-9857-0ad7e8f76544\",\"direction\":\"inbound\",\"from\":\"+15083084809\",\"to\":\"+15086908019\",\"callId\":\"ae40a455-7402-123c-628c-161343ac42f3\",\"sipStatus\":200,\"sipReason\":\"OK\",\"callStatus\":\"in-progress\",\"accountSid\":\"9351f46a-678c-43f5-b8a6-d4eb58d131af\",\"traceId\":\"771bc318bdadd530b133b6f7e8f22fc8\",\"applicationSid\":\"66381298-c034-4d77-9a53-4bc2fdd8a420\",\"fsSipAddress\":\"10.0.214.82:5070\",\"originatingSipIp\":\"54.172.60.3\",\"originatingSipTrunkName\":\"Twilio\",\"apiBaseUrl\":\"http://34.202.214.124/v1\",\"speech\":{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0.009999999776482582,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":6500}}},\"reason\":\"speechDetected\"}"
+                  }
+                },
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "0WZJ737ax8Y=",
+              "parentSpanId": "ajFFIEyrkPI=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842636374000000",
+              "endTimeUnixNano": "1684842636563887000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": false } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "nQvZQXwa9NE=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "performAppWebhook",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554098000000",
+              "endTimeUnixNano": "1684842554128442000",
+              "attributes": [
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "app.tasks",
+                  "value": {
+                    "stringValue": "[config{set synthesizer{google,en-US,en-US-Wavenet-C},set recognizer{google,en-US}}]"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "B0xzzAqYMOM=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "call-status:trying",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554129000000",
+              "endTimeUnixNano": "1684842554129483000",
+              "attributes": [
+                {
+                  "key": "callSid",
+                  "value": {
+                    "stringValue": "767465fe-77a9-4113-9857-0ad7e8f76544"
+                  }
+                },
+                { "key": "direction", "value": { "stringValue": "inbound" } },
+                { "key": "from", "value": { "stringValue": "+15083084809" } },
+                { "key": "to", "value": { "stringValue": "+15086908019" } },
+                {
+                  "key": "callId",
+                  "value": {
+                    "stringValue": "ae40a455-7402-123c-628c-161343ac42f3"
+                  }
+                },
+                { "key": "sipStatus", "value": { "doubleValue": 100 } },
+                { "key": "sipReason", "value": { "stringValue": "Trying" } },
+                { "key": "callStatus", "value": { "stringValue": "trying" } },
+                {
+                  "key": "accountSid",
+                  "value": {
+                    "stringValue": "9351f46a-678c-43f5-b8a6-d4eb58d131af"
+                  }
+                },
+                {
+                  "key": "traceId",
+                  "value": { "stringValue": "771bc318bdadd530b133b6f7e8f22fc8" }
+                },
+                {
+                  "key": "applicationSid",
+                  "value": {
+                    "stringValue": "66381298-c034-4d77-9a53-4bc2fdd8a420"
+                  }
+                },
+                {
+                  "key": "fsSipAddress",
+                  "value": { "stringValue": "10.0.214.82:5070" }
+                },
+                {
+                  "key": "originatingSipIp",
+                  "value": { "stringValue": "54.172.60.3" }
+                },
+                {
+                  "key": "originatingSipTrunkName",
+                  "value": { "stringValue": "Twilio" }
+                },
+                {
+                  "key": "apiBaseUrl",
+                  "value": { "stringValue": "http://34.202.214.124/v1" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "II5fhzCR3CY=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "background-gather:gather{inputs=speech,vendor=google,language=en-US}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842562123000000",
+              "endTimeUnixNano": "1684842566350739000",
+              "attributes": [
+                { "key": "stt.resolve", "value": { "stringValue": "speech" } },
+                {
+                  "key": "stt.result",
+                  "value": {
+                    "stringValue": "{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0.009999999776482582,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3860}}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "/m7CyMQWCg8=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>To get s...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842566615000000",
+              "endTimeUnixNano": "1684842571751463000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>To get s...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "WBytnIBoOEA=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842592512000000",
+              "endTimeUnixNano": "1684842592512105000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "7Ow/BZx+/AQ=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>If this ...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842557242000000",
+              "endTimeUnixNano": "1684842562122545000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>If this ...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "4Gj8egMup5E=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{enable barge-in,set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842562123000000",
+              "endTimeUnixNano": "1684842562123447000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{enable barge-in,set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "hDBtCQ4b60Y=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "background-gather:gather{inputs=speech,vendor=google,language=en-US}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842576026000000",
+              "endTimeUnixNano": "1684842579764339000",
+              "attributes": [
+                { "key": "stt.resolve", "value": { "stringValue": "speech" } },
+                {
+                  "key": "stt.result",
+                  "value": {
+                    "stringValue": "{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0.009999999776482582,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3410}}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "vZRcKTamLv4=",
+              "parentSpanId": "XUwpHvRb/lc=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842613907000000",
+              "endTimeUnixNano": "1684842613909280000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "NOHyiJWLVHo=",
+              "parentSpanId": "7Ow/BZx+/AQ=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842557243000000",
+              "endTimeUnixNano": "1684842557253911000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "x4u3rxgdHAc=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842580581000000",
+              "endTimeUnixNano": "1684842580581040000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "z5MRiSeNVyU=",
+              "parentSpanId": "cYSovHqI6Y8=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842606956000000",
+              "endTimeUnixNano": "1684842607172870000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": false } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "VfMLSLw+o3g=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{enable barge-in,set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842606954000000",
+              "endTimeUnixNano": "1684842606954647000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{enable barge-in,set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "cYSovHqI6Y8=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>Is <pros...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842606956000000",
+              "endTimeUnixNano": "1684842612854104000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>Is <pros...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "4wHCFczasyc=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "background-gather:gather{inputs=speech,vendor=google,language=en-US}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842606955000000",
+              "endTimeUnixNano": "1684842613803081000",
+              "attributes": [
+                { "key": "stt.resolve", "value": { "stringValue": "speech" } },
+                {
+                  "key": "stt.result",
+                  "value": {
+                    "stringValue": "{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0.009999999776482582,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":6500}}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "7Ln124lhZt8=",
+              "parentSpanId": "C20bpgpHMQI=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842592512000000",
+              "endTimeUnixNano": "1684842592513753000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "BMygYxWItSg=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842620756000000",
+              "endTimeUnixNano": "1684842620756182000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "xcnCbPWRh10=",
+              "parentSpanId": "NAyTpTXAU1A=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554231000000",
+              "endTimeUnixNano": "1684842554235254000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "tELR54nXoNE=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "lookupApplication",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554095000000",
+              "endTimeUnixNano": "1684842554096453000",
+              "attributes": [
+                {
+                  "key": "app.hook",
+                  "value": {
+                    "stringValue": "wss://endpoint-lincare.cognigy.cloud/869492d9390e53965486dfdaf878251df9366a0579fbfb50e0e7337a6f8d08da/voiceGateway"
+                  }
+                },
+                {
+                  "key": "application_sid",
+                  "value": {
+                    "stringValue": "66381298-c034-4d77-9a53-4bc2fdd8a420"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "/vhO002O7P8=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554201000000",
+              "endTimeUnixNano": "1684842554201098000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "2uD8RkW+RAk=",
+              "parentSpanId": "II5fhzCR3CY=",
+              "name": "verb:hook (voice)",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842566345000000",
+              "endTimeUnixNano": "1684842566350283000",
+              "attributes": [
+                {
+                  "key": "http.body",
+                  "value": {
+                    "stringValue": "{\"callSid\":\"767465fe-77a9-4113-9857-0ad7e8f76544\",\"direction\":\"inbound\",\"from\":\"+15083084809\",\"to\":\"+15086908019\",\"callId\":\"ae40a455-7402-123c-628c-161343ac42f3\",\"sipStatus\":200,\"sipReason\":\"OK\",\"callStatus\":\"in-progress\",\"accountSid\":\"9351f46a-678c-43f5-b8a6-d4eb58d131af\",\"traceId\":\"771bc318bdadd530b133b6f7e8f22fc8\",\"applicationSid\":\"66381298-c034-4d77-9a53-4bc2fdd8a420\",\"fsSipAddress\":\"10.0.214.82:5070\",\"originatingSipIp\":\"54.172.60.3\",\"originatingSipTrunkName\":\"Twilio\",\"apiBaseUrl\":\"http://34.202.214.124/v1\",\"speech\":{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0.009999999776482582,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3860}}},\"reason\":\"speechDetected\"}"
+                  }
+                },
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "hLTJfcM17Qc=",
+              "parentSpanId": "/m7CyMQWCg8=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842566615000000",
+              "endTimeUnixNano": "1684842566618952000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "mj8jSbYZ6Qc=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>You said...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842587921000000",
+              "endTimeUnixNano": "1684842591619264000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>You said...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "xsfdwIzTC1M=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842566614000000",
+              "endTimeUnixNano": "1684842566614063000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "jDTOyYffJaE=",
+              "parentSpanId": "yKdO7XpUVL8=",
+              "name": "verb:hook (voice)",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842575905000000",
+              "endTimeUnixNano": "1684842575911823000",
+              "attributes": [
+                {
+                  "key": "http.body",
+                  "value": {
+                    "stringValue": "{\"callSid\":\"767465fe-77a9-4113-9857-0ad7e8f76544\",\"direction\":\"inbound\",\"from\":\"+15083084809\",\"to\":\"+15086908019\",\"callId\":\"ae40a455-7402-123c-628c-161343ac42f3\",\"sipStatus\":200,\"sipReason\":\"OK\",\"callStatus\":\"in-progress\",\"accountSid\":\"9351f46a-678c-43f5-b8a6-d4eb58d131af\",\"traceId\":\"771bc318bdadd530b133b6f7e8f22fc8\",\"applicationSid\":\"66381298-c034-4d77-9a53-4bc2fdd8a420\",\"fsSipAddress\":\"10.0.214.82:5070\",\"originatingSipIp\":\"54.172.60.3\",\"originatingSipTrunkName\":\"Twilio\",\"apiBaseUrl\":\"http://34.202.214.124/v1\",\"speech\":{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":true,\"alternatives\":[{\"confidence\":0.6081536412239075,\"transcript\":\"Tom\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0,\"is_final\":true,\"alternatives\":[{\"confidence\":0.6081536412239075,\"transcript\":\"Tom\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3160}}},\"reason\":\"speechDetected\"}"
+                  }
+                },
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "zG0qbdxO39o=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842580580000000",
+              "endTimeUnixNano": "1684842580580109000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "WfAqxQwLeSk=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>I'll nee...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842593421000000",
+              "endTimeUnixNano": "1684842601010143000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>I'll nee...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "qlASOdvaW1I=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>Great!</...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842606009000000",
+              "endTimeUnixNano": "1684842606954134000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>Great!</...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "XUwpHvRb/lc=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>Great! I...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842613907000000",
+              "endTimeUnixNano": "1684842620755641000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>Great! I...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "acTKZOGYNy4=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "call-status:completed",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842642352000000",
+              "endTimeUnixNano": "1684842642352835000",
+              "attributes": [
+                {
+                  "key": "callSid",
+                  "value": {
+                    "stringValue": "767465fe-77a9-4113-9857-0ad7e8f76544"
+                  }
+                },
+                { "key": "direction", "value": { "stringValue": "inbound" } },
+                { "key": "from", "value": { "stringValue": "+15083084809" } },
+                { "key": "to", "value": { "stringValue": "+15086908019" } },
+                {
+                  "key": "callId",
+                  "value": {
+                    "stringValue": "ae40a455-7402-123c-628c-161343ac42f3"
+                  }
+                },
+                { "key": "sipStatus", "value": { "doubleValue": 200 } },
+                { "key": "sipReason", "value": { "stringValue": "OK" } },
+                {
+                  "key": "callStatus",
+                  "value": { "stringValue": "completed" }
+                },
+                {
+                  "key": "accountSid",
+                  "value": {
+                    "stringValue": "9351f46a-678c-43f5-b8a6-d4eb58d131af"
+                  }
+                },
+                {
+                  "key": "traceId",
+                  "value": { "stringValue": "771bc318bdadd530b133b6f7e8f22fc8" }
+                },
+                {
+                  "key": "applicationSid",
+                  "value": {
+                    "stringValue": "66381298-c034-4d77-9a53-4bc2fdd8a420"
+                  }
+                },
+                {
+                  "key": "fsSipAddress",
+                  "value": { "stringValue": "10.0.214.82:5070" }
+                },
+                {
+                  "key": "originatingSipIp",
+                  "value": { "stringValue": "54.172.60.3" }
+                },
+                {
+                  "key": "originatingSipTrunkName",
+                  "value": { "stringValue": "Twilio" }
+                },
+                {
+                  "key": "callTerminationBy",
+                  "value": { "stringValue": "caller" }
+                },
+                { "key": "duration", "value": { "doubleValue": 88 } },
+                {
+                  "key": "apiBaseUrl",
+                  "value": { "stringValue": "http://34.202.214.124/v1" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "EsAGllVavV4=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "lookupAccountDetails",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554082000000",
+              "endTimeUnixNano": "1684842554094392000",
+              "attributes": [
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "bUaM2Z7lBYw=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "call-status:in-progress",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554230000000",
+              "endTimeUnixNano": "1684842554231724000",
+              "attributes": [
+                {
+                  "key": "callSid",
+                  "value": {
+                    "stringValue": "767465fe-77a9-4113-9857-0ad7e8f76544"
+                  }
+                },
+                { "key": "direction", "value": { "stringValue": "inbound" } },
+                { "key": "from", "value": { "stringValue": "+15083084809" } },
+                { "key": "to", "value": { "stringValue": "+15086908019" } },
+                {
+                  "key": "callId",
+                  "value": {
+                    "stringValue": "ae40a455-7402-123c-628c-161343ac42f3"
+                  }
+                },
+                { "key": "sipStatus", "value": { "doubleValue": 200 } },
+                { "key": "sipReason", "value": { "stringValue": "OK" } },
+                {
+                  "key": "callStatus",
+                  "value": { "stringValue": "in-progress" }
+                },
+                {
+                  "key": "accountSid",
+                  "value": {
+                    "stringValue": "9351f46a-678c-43f5-b8a6-d4eb58d131af"
+                  }
+                },
+                {
+                  "key": "traceId",
+                  "value": { "stringValue": "771bc318bdadd530b133b6f7e8f22fc8" }
+                },
+                {
+                  "key": "applicationSid",
+                  "value": {
+                    "stringValue": "66381298-c034-4d77-9a53-4bc2fdd8a420"
+                  }
+                },
+                {
+                  "key": "fsSipAddress",
+                  "value": { "stringValue": "10.0.214.82:5070" }
+                },
+                {
+                  "key": "originatingSipIp",
+                  "value": { "stringValue": "54.172.60.3" }
+                },
+                {
+                  "key": "originatingSipTrunkName",
+                  "value": { "stringValue": "Twilio" }
+                },
+                {
+                  "key": "apiBaseUrl",
+                  "value": { "stringValue": "http://34.202.214.124/v1" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "QDqFlD9G0OI=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>You said...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842576029000000",
+              "endTimeUnixNano": "1684842579136182000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>You said...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "ThRqvos2qaE=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>How can ...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842620756000000",
+              "endTimeUnixNano": "1684842622537272000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>How can ...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "WCQzOln7vRU=",
+              "parentSpanId": "ThRqvos2qaE=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842620756000000",
+              "endTimeUnixNano": "1684842620757278000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "oP+aJRANMEo=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>Just a m...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842641671000000",
+              "endTimeUnixNano": "1684842642416314000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>Just a m...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "NAyTpTXAU1A=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak><break t...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842554230000000",
+              "endTimeUnixNano": "1684842557241817000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak><break t...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "UvNYhYVjGc4=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>Are you ...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842562124000000",
+              "endTimeUnixNano": "1684842564753228000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>Are you ...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "xSb9XOPZqhA=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842566614000000",
+              "endTimeUnixNano": "1684842566614134000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "DSre5KgyrTQ=",
+              "parentSpanId": "QDqFlD9G0OI=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842576030000000",
+              "endTimeUnixNano": "1684842576286573000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": false } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "bTmK18TISUA=",
+              "parentSpanId": "CQiu+3VVLOQ=",
+              "name": "verb:hook (voice)",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842587804000000",
+              "endTimeUnixNano": "1684842587808408000",
+              "attributes": [
+                {
+                  "key": "http.body",
+                  "value": {
+                    "stringValue": "{\"callSid\":\"767465fe-77a9-4113-9857-0ad7e8f76544\",\"direction\":\"inbound\",\"from\":\"+15083084809\",\"to\":\"+15086908019\",\"callId\":\"ae40a455-7402-123c-628c-161343ac42f3\",\"sipStatus\":200,\"sipReason\":\"OK\",\"callStatus\":\"in-progress\",\"accountSid\":\"9351f46a-678c-43f5-b8a6-d4eb58d131af\",\"traceId\":\"771bc318bdadd530b133b6f7e8f22fc8\",\"applicationSid\":\"66381298-c034-4d77-9a53-4bc2fdd8a420\",\"fsSipAddress\":\"10.0.214.82:5070\",\"originatingSipIp\":\"54.172.60.3\",\"originatingSipTrunkName\":\"Twilio\",\"apiBaseUrl\":\"http://34.202.214.124/v1\",\"speech\":{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":true,\"alternatives\":[{\"confidence\":0.9747781157493591,\"transcript\":\"Smith\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0,\"is_final\":true,\"alternatives\":[{\"confidence\":0.9747781157493591,\"transcript\":\"Smith\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3630}}},\"reason\":\"speechDetected\"}"
+                  }
+                },
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "bjleP9ja+P8=",
+              "parentSpanId": "/YttEKJlCN4=",
+              "name": "verb:hook (voice)",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842605831000000",
+              "endTimeUnixNano": "1684842605836726000",
+              "attributes": [
+                {
+                  "key": "http.body",
+                  "value": {
+                    "stringValue": "{\"callSid\":\"767465fe-77a9-4113-9857-0ad7e8f76544\",\"direction\":\"inbound\",\"from\":\"+15083084809\",\"to\":\"+15086908019\",\"callId\":\"ae40a455-7402-123c-628c-161343ac42f3\",\"sipStatus\":200,\"sipReason\":\"OK\",\"callStatus\":\"in-progress\",\"accountSid\":\"9351f46a-678c-43f5-b8a6-d4eb58d131af\",\"traceId\":\"771bc318bdadd530b133b6f7e8f22fc8\",\"applicationSid\":\"66381298-c034-4d77-9a53-4bc2fdd8a420\",\"fsSipAddress\":\"10.0.214.82:5070\",\"originatingSipIp\":\"54.172.60.3\",\"originatingSipTrunkName\":\"Twilio\",\"apiBaseUrl\":\"http://34.202.214.124/v1\",\"speech\":{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":true,\"alternatives\":[{\"confidence\":0.967818021774292,\"transcript\":\"September 22nd 1998.\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0,\"is_final\":true,\"alternatives\":[{\"confidence\":0.967818021774292,\"transcript\":\"September 22nd 1998.\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3880}}},\"reason\":\"speechDetected\"}"
+                  }
+                },
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "/xyeUW0NVi4=",
+              "parentSpanId": "UvNYhYVjGc4=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842562125000000",
+              "endTimeUnixNano": "1684842562128030000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "HhJUiwftT7k=",
+              "parentSpanId": "hDBtCQ4b60Y=",
+              "name": "verb:hook (voice)",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842579760000000",
+              "endTimeUnixNano": "1684842579764346000",
+              "attributes": [
+                {
+                  "key": "http.body",
+                  "value": {
+                    "stringValue": "{\"callSid\":\"767465fe-77a9-4113-9857-0ad7e8f76544\",\"direction\":\"inbound\",\"from\":\"+15083084809\",\"to\":\"+15086908019\",\"callId\":\"ae40a455-7402-123c-628c-161343ac42f3\",\"sipStatus\":200,\"sipReason\":\"OK\",\"callStatus\":\"in-progress\",\"accountSid\":\"9351f46a-678c-43f5-b8a6-d4eb58d131af\",\"traceId\":\"771bc318bdadd530b133b6f7e8f22fc8\",\"applicationSid\":\"66381298-c034-4d77-9a53-4bc2fdd8a420\",\"fsSipAddress\":\"10.0.214.82:5070\",\"originatingSipIp\":\"54.172.60.3\",\"originatingSipTrunkName\":\"Twilio\",\"apiBaseUrl\":\"http://34.202.214.124/v1\",\"speech\":{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0.009999999776482582,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3410}}},\"reason\":\"speechDetected\"}"
+                  }
+                },
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "UPcnQoKpKQA=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842613907000000",
+              "endTimeUnixNano": "1684842613907243000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "pbZpXV+jKpA=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842636373000000",
+              "endTimeUnixNano": "1684842636373098000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "ajFFIEyrkPI=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:say{text=<speak>To help ...}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842636374000000",
+              "endTimeUnixNano": "1684842641671486000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": { "stringValue": "say{text=<speak>To help ...}" }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "2+g37wOMvNw=",
+              "parentSpanId": "mj8jSbYZ6Qc=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842587921000000",
+              "endTimeUnixNano": "1684842588150268000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": false } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "miahv24Pt6M=",
+              "parentSpanId": "kWBmHK/pYJg=",
+              "name": "verb:hook (voice)",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842592310000000",
+              "endTimeUnixNano": "1684842592314151000",
+              "attributes": [
+                {
+                  "key": "http.body",
+                  "value": {
+                    "stringValue": "{\"callSid\":\"767465fe-77a9-4113-9857-0ad7e8f76544\",\"direction\":\"inbound\",\"from\":\"+15083084809\",\"to\":\"+15086908019\",\"callId\":\"ae40a455-7402-123c-628c-161343ac42f3\",\"sipStatus\":200,\"sipReason\":\"OK\",\"callStatus\":\"in-progress\",\"accountSid\":\"9351f46a-678c-43f5-b8a6-d4eb58d131af\",\"traceId\":\"771bc318bdadd530b133b6f7e8f22fc8\",\"applicationSid\":\"66381298-c034-4d77-9a53-4bc2fdd8a420\",\"fsSipAddress\":\"10.0.214.82:5070\",\"originatingSipIp\":\"54.172.60.3\",\"originatingSipTrunkName\":\"Twilio\",\"apiBaseUrl\":\"http://34.202.214.124/v1\",\"speech\":{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0.009999999776482582,\"is_final\":false,\"alternatives\":[{\"confidence\":0,\"transcript\":\"yeah\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":4120}}},\"reason\":\"speechDetected\"}"
+                  }
+                },
+                { "key": "http.statusCode", "value": { "doubleValue": 200 } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "+kmxP8FSC2Q=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842593419000000",
+              "endTimeUnixNano": "1684842593420550000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "config{set synthesizer{google,en-US,en-US-Wavenet-F},set recognizer{google,en-US}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "/0GLVSc1Jag=",
+              "parentSpanId": "WfAqxQwLeSk=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842593421000000",
+              "endTimeUnixNano": "1684842593422933000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": true } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "/YttEKJlCN4=",
+              "parentSpanId": "qbISe1Lp1Oc=",
+              "name": "verb:gather{inputs=speech,vendor=google,language=en-US}",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842601010000000",
+              "endTimeUnixNano": "1684842605836991000",
+              "attributes": [
+                {
+                  "key": "verb.summary",
+                  "value": {
+                    "stringValue": "gather{inputs=speech,vendor=google,language=en-US}"
+                  }
+                },
+                { "key": "stt.resolve", "value": { "stringValue": "speech" } },
+                {
+                  "key": "stt.result",
+                  "value": {
+                    "stringValue": "{\"language_code\":\"en-US\",\"channel_tag\":1,\"is_final\":true,\"alternatives\":[{\"confidence\":0.967818021774292,\"transcript\":\"September 22nd 1998.\"}],\"vendor\":{\"name\":\"google\",\"evt\":{\"stability\":0,\"is_final\":true,\"alternatives\":[{\"confidence\":0.967818021774292,\"transcript\":\"September 22nd 1998.\"}],\"language_code\":\"en-us\",\"channel_tag\":0,\"result_end_time\":3880}}}"
+                  }
+                },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": { "stringValue": "jambonz-feature-server" }
+          }
+        ]
+      },
+      "instrumentationLibrarySpans": [
+        {
+          "instrumentationLibrary": {
+            "name": "jambonz-feature-server",
+            "version": "undefined"
+          },
+          "spans": [
+            {
+              "traceId": "dxvDGL2t1TCxM7b36PIvyA==",
+              "spanId": "q297tQySEPg=",
+              "parentSpanId": "qlASOdvaW1I=",
+              "name": "tts-generation",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1684842606009000000",
+              "endTimeUnixNano": "1684842606125833000",
+              "attributes": [
+                { "key": "tts.vendor", "value": { "stringValue": "google" } },
+                { "key": "tts.language", "value": { "stringValue": "en-US" } },
+                {
+                  "key": "tts.voice",
+                  "value": { "stringValue": "en-US-Wavenet-F" }
+                },
+                { "key": "tts.cached", "value": { "boolValue": false } },
+                {
+                  "key": "service.name",
+                  "value": { "stringValue": "jambonz-feature-server" }
+                },
+                {
+                  "key": "telemetry.sdk.language",
+                  "value": { "stringValue": "nodejs" }
+                },
+                {
+                  "key": "telemetry.sdk.name",
+                  "value": { "stringValue": "opentelemetry" }
+                },
+                {
+                  "key": "telemetry.sdk.version",
+                  "value": { "stringValue": "1.12.0" }
+                },
+                {
+                  "key": "service.version",
+                  "value": { "stringValue": "0.8.3" }
+                },
+                {
+                  "key": "internal.span.format",
+                  "value": { "stringValue": "jaeger" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
