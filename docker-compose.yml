@@ -10,6 +10,10 @@ services:
       MYSQL_PASSWORD: jambones_password
     volumes:
       - mysql_data:/var/lib/mysql
+      # Initialize schema + seed data on first startup (only runs when mysql_data is empty)
+      - ./jambonz-api-server/db/jambones-sql.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./jambonz-api-server/db/seed-production-database-open-source.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - ./jambonz-api-server/db/create-admin-user.sql:/docker-entrypoint-initdb.d/03-admin.sql:ro
     networks:
       - jambonz-network
     healthcheck:
@@ -138,8 +142,8 @@ services:
       - "3001:3001"
     environment:
       HTTP_PORT: "3001"
-      # Must be reachable from the user's browser (API published on host 3002)
-      API_BASE_URL: http://localhost:3002/v1
+      # Must be reachable from the user's browser (set this to your VPS public IP/domain)
+      API_BASE_URL: ${JAMBONZ_PUBLIC_API_BASE_URL:-http://localhost:3002/v1}
     depends_on:
       api-server:
         condition: service_healthy
