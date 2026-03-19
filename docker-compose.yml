@@ -40,6 +40,14 @@ services:
       container_name: jambonz-drachtio
       ports:
         - "9022:9022"
+        # SIP ports (publish on the SIP server, not the apps)
+        - "5060:5060/udp"
+        - "5060:5060/tcp"
+        - "5061:5061/tcp"
+        - "5062:5062/udp"
+        - "5062:5062/tcp"
+        - "5063:5063/tcp"
+        - "5064:5064/tcp"
       environment:
         DRACHTIO_SECRET: cymru
       command: >
@@ -214,10 +222,6 @@ services:
       context: ./sbc-inbound
       dockerfile: Dockerfile
     container_name: jambonz-sbc-inbound
-    ports:
-      - "5060:5060/udp"
-      - "5060:5060/tcp"
-      - "5061:5061/tcp"
     environment:
       SBC_INBOUND_PORT: 5060
       SBC_INBOUND_HOST: 0.0.0.0
@@ -264,10 +268,6 @@ services:
       context: ./sbc-outbound
       dockerfile: Dockerfile
     container_name: jambonz-sbc-outbound
-    ports:
-      - "5062:5062/udp"
-      - "5062:5062/tcp"
-      - "5063:5063/tcp"
     environment:
       SBC_OUTBOUND_PORT: 5062
       SBC_OUTBOUND_HOST: 0.0.0.0
@@ -311,8 +311,6 @@ services:
       context: ./sbc-sip-sidecar
       dockerfile: Dockerfile
     container_name: jambonz-sbc-sip-sidecar
-    ports:
-      - "5064:5064/tcp"
     environment:
       SBC_SIP_SIDECAR_PORT: 5064
       SBC_SIP_SIDECAR_HOST: 0.0.0.0
