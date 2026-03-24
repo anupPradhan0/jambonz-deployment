@@ -7,7 +7,7 @@ services:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: jambones
       MYSQL_USER: jambones
-      MYSQL_PASSWORD: jambones_password
+      MYSQL_PASSWORD: ${JAMBONES_MYSQL_PASSWORD:-jambones_password}
     volumes:
       - mysql_data:/var/lib/mysql
       # Initialize schema + seed data on first startup (only runs when mysql_data is empty)
@@ -41,7 +41,7 @@ services:
       ports:
         - "9022:9022"
       environment:
-        DRACHTIO_SECRET: cymru
+        DRACHTIO_SECRET: ${DRACHTIO_SECRET:-cymru}
       networks:
         - jambonz-network
       healthcheck:
@@ -102,12 +102,12 @@ services:
       JAMBONES_MYSQL_HOST: mysql
       JAMBONES_MYSQL_PORT: 3306
       JAMBONES_MYSQL_USER: jambones
-      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_PASSWORD: ${JAMBONES_MYSQL_PASSWORD:-jambones_password}
       JAMBONES_MYSQL_DATABASE: jambones
       JAMBONES_REDIS_HOST: redis
       JAMBONES_REDIS_PORT: 6379
-      JWT_SECRET: your-super-secret-jwt-key-change-this
-      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
       JAMBONES_TIME_SERIES_HOST: influxdb
       JAMBONES_TIME_SERIES_PORT: 8086
       JAMBONES_LOGLEVEL: info
@@ -129,7 +129,7 @@ services:
       retries: 12
       start_period: 120s
 
-  # Jambonz Webapp (provisioning UI) — browser talks to API on host :3000
+  # Jambonz Webapp (provisioning UI)
   webapp:
     build:
       context: ./jambonz-webapp
@@ -140,7 +140,7 @@ services:
     environment:
       HTTP_PORT: "3001"
       # Must be reachable from the user's browser (set this to your VPS public IP/domain)
-      API_BASE_URL: ${JAMBONZ_PUBLIC_API_BASE_URL:-http://localhost:3002/v1}
+      API_BASE_URL: ${JAMBONZ_PUBLIC_API_BASE_URL:-http://${JAMBONZ_PUBLIC_HOST:-localhost}:3002/v1}
     depends_on:
       api-server:
         condition: service_healthy
@@ -165,18 +165,18 @@ services:
       FEATURE_SERVER_PORT: 3100
       FEATURE_SERVER_HOST: 0.0.0.0
       HTTP_PORT: 3100
-      JWT_SECRET: your-super-secret-jwt-key-change-this
-      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
       JAMBONES_MYSQL_HOST: mysql
       JAMBONES_MYSQL_PORT: 3306
       JAMBONES_MYSQL_USER: jambones
-      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_PASSWORD: ${JAMBONES_MYSQL_PASSWORD:-jambones_password}
       JAMBONES_MYSQL_DATABASE: jambones
       JAMBONES_REDIS_HOST: redis
       JAMBONES_REDIS_PORT: 6379
       DRACHTIO_HOST: drachtio
       DRACHTIO_PORT: 9022
-      DRACHTIO_SECRET: cymru
+      DRACHTIO_SECRET: ${DRACHTIO_SECRET:-cymru}
       JAMBONES_SBCS: sbc-inbound
       # FreeSWITCH ESL runs on 8021 inside the docker network
       JAMBONES_FREESWITCH: freeswitch:8021:JambonzR0ck$$:docker-host
@@ -217,25 +217,25 @@ services:
       SBC_INBOUND_PORT: 5060
       SBC_INBOUND_HOST: 0.0.0.0
       SBC_INBOUND_WS_PORT: 5061
-      JWT_SECRET: your-super-secret-jwt-key-change-this
-      ENCRYPTION_SECRET: your-encryption-secret-change-this
-      JAMBONES_PUBLIC_IP: 138.201.59.156
-      JAMBONES_SBC_PUBLIC_IP: 138.201.59.156
-      JAMBONES_ADVERTISE_IP: 138.201.59.156
-      JAMBONES_SBC_ADVERTISED_IP: 138.201.59.156
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
+      JAMBONES_PUBLIC_IP: ${JAMBONES_PUBLIC_IP:-138.201.59.156}
+      JAMBONES_SBC_PUBLIC_IP: ${JAMBONES_SBC_PUBLIC_IP:-138.201.59.156}
+      JAMBONES_ADVERTISE_IP: ${JAMBONES_ADVERTISE_IP:-138.201.59.156}
+      JAMBONES_SBC_ADVERTISED_IP: ${JAMBONES_SBC_ADVERTISED_IP:-138.201.59.156}
       JAMBONES_SBC_INTERFACE: 0.0.0.0
       JAMBONES_DOCKER_NETWORK_CIDR: 172.19.0.0/16
       JAMBONES_MYSQL_HOST: mysql
       JAMBONES_MYSQL_PORT: 3306
       JAMBONES_MYSQL_USER: jambones
-      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_PASSWORD: ${JAMBONES_MYSQL_PASSWORD:-jambones_password}
       JAMBONES_MYSQL_DATABASE: jambones
       JAMBONES_REDIS_HOST: redis
       JAMBONES_REDIS_PORT: 6379
       JAMBONES_LOGLEVEL: info
       DRACHTIO_HOST: drachtio
       DRACHTIO_PORT: 9022
-      DRACHTIO_SECRET: cymru
+      DRACHTIO_SECRET: ${DRACHTIO_SECRET:-cymru}
       JAMBONES_FEATURE_SERVER_HOST: feature-server
       JAMBONES_FEATURE_SERVER_PORT: 3100
       JAMBONES_TIME_SERIES_HOST: influxdb
@@ -270,19 +270,19 @@ services:
       SBC_OUTBOUND_PORT: 5062
       SBC_OUTBOUND_HOST: 0.0.0.0
       SBC_OUTBOUND_WS_PORT: 5063
-      JWT_SECRET: your-super-secret-jwt-key-change-this
-      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
       JAMBONES_MYSQL_HOST: mysql
       JAMBONES_MYSQL_PORT: 3306
       JAMBONES_MYSQL_USER: jambones
-      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_PASSWORD: ${JAMBONES_MYSQL_PASSWORD:-jambones_password}
       JAMBONES_MYSQL_DATABASE: jambones
       JAMBONES_REDIS_HOST: redis
       JAMBONES_REDIS_PORT: 6379
       JAMBONES_LOGLEVEL: info
       DRACHTIO_HOST: drachtio
       DRACHTIO_PORT: 9022
-      DRACHTIO_SECRET: cymru
+      DRACHTIO_SECRET: ${DRACHTIO_SECRET:-cymru}
       JAMBONES_FEATURE_SERVER_HOST: feature-server
       JAMBONES_FEATURE_SERVER_PORT: 3100
       JAMBONES_TIME_SERIES_HOST: influxdb
@@ -314,19 +314,19 @@ services:
     environment:
       SBC_SIP_SIDECAR_PORT: 5064
       SBC_SIP_SIDECAR_HOST: 0.0.0.0
-      JWT_SECRET: your-super-secret-jwt-key-change-this
-      ENCRYPTION_SECRET: your-encryption-secret-change-this
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET}
       JAMBONES_MYSQL_HOST: mysql
       JAMBONES_MYSQL_PORT: 3306
       JAMBONES_MYSQL_USER: jambones
-      JAMBONES_MYSQL_PASSWORD: jambones_password
+      JAMBONES_MYSQL_PASSWORD: ${JAMBONES_MYSQL_PASSWORD:-jambones_password}
       JAMBONES_MYSQL_DATABASE: jambones
       JAMBONES_REDIS_HOST: redis
       JAMBONES_REDIS_PORT: 6379
       JAMBONES_LOGLEVEL: info
       DRACHTIO_HOST: drachtio
       DRACHTIO_PORT: 9022
-      DRACHTIO_SECRET: cymru
+      DRACHTIO_SECRET: ${DRACHTIO_SECRET:-cymru}
       JAMBONES_FEATURE_SERVER_HOST: feature-server
       JAMBONES_FEATURE_SERVER_PORT: 3100
       JAMBONES_TIME_SERIES_HOST: influxdb
