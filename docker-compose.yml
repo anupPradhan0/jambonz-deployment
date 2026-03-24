@@ -179,7 +179,7 @@ services:
       DRACHTIO_SECRET: cymru
       JAMBONES_SBCS: sbc-inbound
       # FreeSWITCH ESL runs on 8021 inside the docker network
-      JAMBONES_FREESWITCH: freeswitch:8021:JambonzR0ck$:docker-host
+      JAMBONES_FREESWITCH: freeswitch:8021:JambonzR0ck$$:docker-host
       JAMBONES_TIME_SERIES_HOST: influxdb
       JAMBONES_TIME_SERIES_PORT: 8086
       ENABLE_METRICS: "1"
@@ -219,9 +219,11 @@ services:
       SBC_INBOUND_WS_PORT: 5061
       JWT_SECRET: your-super-secret-jwt-key-change-this
       ENCRYPTION_SECRET: your-encryption-secret-change-this
-      JAMBONES_PUBLIC_IP: ${JAMBONES_PUBLIC_IP:-138.201.59.156}
-      JAMBONES_SBC_PUBLIC_IP: ${JAMBONES_SBC_PUBLIC_IP:-138.201.59.156}
-      JAMBONES_ADVERTISE_IP: ${JAMBONES_ADVERTISE_IP:-138.201.59.156}
+      JAMBONES_PUBLIC_IP: 138.201.59.156
+      JAMBONES_SBC_PUBLIC_IP: 138.201.59.156
+      JAMBONES_ADVERTISE_IP: 138.201.59.156
+      JAMBONES_SBC_ADVERTISED_IP: 138.201.59.156
+      JAMBONES_SBC_INTERFACE: 0.0.0.0
       JAMBONES_DOCKER_NETWORK_CIDR: 172.19.0.0/16
       JAMBONES_MYSQL_HOST: mysql
       JAMBONES_MYSQL_PORT: 3306
@@ -239,7 +241,7 @@ services:
       JAMBONES_TIME_SERIES_HOST: influxdb
       JAMBONES_TIME_SERIES_PORT: 8086
       ENABLE_METRICS: "1"
-      JAMBONES_NETWORK_CIDR: 10.0.0.0/8
+      JAMBONES_NETWORK_CIDR: 172.19.0.0/16
     depends_on:
       mysql:
         condition: service_healthy
