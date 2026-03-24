@@ -1,0 +1,24 @@
+{
+  "name": "jambonz-deployment",
+  "version": "1.0.0",
+  "description": "Deployment scaffold for a self-hosted [jambonz](https://www.jambonz.org/) stack (API server, feature server, webapp, SBC inbound/outbound, SIP sidecar) using Docker Compose.",
+  "main": "ecosystem.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anupPradhan0/jambonz-deployment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/anupPradhan0/jambonz-deployment/issues"
+  },
+  "homepage": "https://github.com/anupPradhan0/jambonz-deployment#readme",
+  "dependencies": {
+    "twilio": "^5.13.0"
+  }
+}
