@@ -136,7 +136,7 @@ services:
       dockerfile: Dockerfile
     container_name: jambonz-webapp
     ports:
-      - "3001:3001"
+      - "3000:3001"
     environment:
       HTTP_PORT: "3001"
       # Must be reachable from the user's browser (set this to your VPS public IP/domain)
