@@ -209,10 +209,7 @@ services:
       context: ./sbc-inbound
       dockerfile: Dockerfile
     container_name: jambonz-sbc-inbound
-    ports:
-      - "5060:5060/udp"
-      - "5060:5060/tcp"
-      - "5061:5061/tcp"
+    network_mode: host
     environment:
       SBC_INBOUND_PORT: 5060
       SBC_INBOUND_HOST: 0.0.0.0
@@ -249,8 +246,6 @@ services:
         condition: service_healthy
       drachtio:
         condition: service_healthy
-    networks:
-      - jambonz-network
     healthcheck:
       test: ["CMD", "bash", "liveness.sh"]
       timeout: 10s
