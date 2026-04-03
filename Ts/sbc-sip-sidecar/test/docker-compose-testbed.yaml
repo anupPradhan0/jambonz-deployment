@@ -1,0 +1,94 @@
+version: '3'
+
+networks:
+  sbc-sip-sidecar:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.39.0.0/16
+
+services:
+  mysql:
+    image: mysql:5.7
+    platform: linux/x86_64
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "--protocol", "tcp"]
+      timeout: 5s
+      retries: 10
+    networks:
+      sbc-sip-sidecar:
+        ipv4_address: 172.39.0.2
+  sbc:
+    image: drachtio/drachtio-server:latest
+    command: drachtio --contact "sip:*;transport=udp" --loglevel debug --sofia-loglevel 9
+    ports:
+      - "9022:9022/tcp"
+    networks:
+      sbc-sip-sidecar:
+        ipv4_address: 172.39.0.10
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  auth-server:
+    image: jambonz/customer-auth-server:latest
+    command: npm start
+    ports:
+      - "4000:4000/tcp"
+    env_file: docker.env
+    networks:
+      sbc-sip-sidecar:
+        ipv4_address: 172.39.0.12
+
+  influxdb:
+    image: influxdb:1.8
+    ports:
+      - "8086:8086/tcp"
+    environment:
+      INFLUXDB_DB: "jambones_time_series"
+    networks:
+      sbc-sip-sidecar:
+        ipv4_address: 172.39.0.16
+
+  redis:
+    image: redis:5-alpine
+    ports:
+      - "16379:6379/tcp"
+    networks:
+      sbc-sip-sidecar:
+        ipv4_address: 172.39.0.13
+
+  sipp-uas-auth-register:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas-auth-register.xml
+    container_name: sipp-uas-auth-register
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-sip-sidecar:
+        ipv4_address: 172.39.0.14
+
+  sipp-uas-auth-register-fail:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas-auth-register2.xml
+    container_name: sipp-uas-auth-register2
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-sip-sidecar:
+        ipv4_address: 172.39.0.15
+  uas:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas.xml
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-sip-sidecar:
+        ipv4_address: 172.39.0.60

@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false
+  },
+  "include": ["app.ts", "lib/**/*.ts", "types/**/*.d.ts", "types/jambonz-locals.ts"],
+  "exclude": ["node_modules", "dist", "test"]
+}

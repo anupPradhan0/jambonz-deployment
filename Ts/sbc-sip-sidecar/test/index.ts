@@ -1,0 +1,9 @@
+import './docker_start';
+import './create-test-db';
+import './regbot-tests';
+import './regbot-unit-test';
+import './sip-register-tests';
+import './sip-options-tests';
+import './cli-tests';
+import './docker_stop';
+import './utils';
