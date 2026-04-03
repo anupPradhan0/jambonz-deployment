@@ -1,0 +1,128 @@
+version: '3'
+
+networks:
+  sbc-outbound:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.39.0.0/16
+
+services:
+  mysql:
+    image: mysql:5.7
+    platform: linux/x86_64
+    ports:
+      - "3306:3306"
+    environment: 
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "--protocol", "tcp"]
+      timeout: 5s
+      retries: 10    
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.2
+
+  sbc:
+    image: drachtio/drachtio-server:0.8.26
+    command: drachtio --contact "sip:*;transport=udp" --loglevel debug --sofia-loglevel 9
+    ports:
+      - "9060:9022/tcp"
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.10
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  redis:
+    image: redis:5-alpine
+    ports:
+      - "16379:6379/tcp"
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.11
+
+  rtpengine:
+    image: drachtio/rtpengine:latest
+    command: rtpengine --interface private/172.39.0.12 --interface public/172.39.0.12!172.39.0.12
+    ports:
+      - "12222:22222/udp"
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.12
+
+  registrar:
+    image: jambonz/sbc-registrar:latest
+    command: npm start
+    env_file: registrar.env
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.13
+
+  auth-server:
+    image: jambonz/customer-auth-server:latest
+    command: npm start
+    env_file: http-auth.env
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.14
+
+  carrier:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas.xml
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.20
+
+  carrier-503:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas-503.xml
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.21
+
+  carrier-cancel:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas-cancel.xml
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.22
+
+  carrier-expect-reinvite:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas-reinvite.xml
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.23
+
+  sip-uri-auth:
+    image: drachtio/sipp:latest
+    command: sipp -sf /tmp/uas-auth.xml
+    volumes:
+      - ./scenarios:/tmp
+    tty: true
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.24
+
+  influxdb:
+    image: influxdb:1.8
+    ports:
+      - "8086:8086"
+    networks:
+      sbc-outbound:
+        ipv4_address: 172.39.0.90
+        
