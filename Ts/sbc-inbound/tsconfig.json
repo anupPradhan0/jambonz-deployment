@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020", "ES2021.Promise"],
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "moduleResolution": "node"
+  },
+  "include": ["app.ts", "lib/**/*.ts", "bin/**/*.ts", "test/**/*.ts", "types/**/*.d.ts", "types/jambonz-sip.ts"]
+}

@@ -1,0 +1,12 @@
+{
+  "LifeCycleEvents" : {
+    "ScaleIn": "scale-in",
+    "StandbyEnter": "standby-enter",
+    "StandbyExit": "standby-exit"
+  },
+  "MediaPath": {
+    "NoMedia": "no-media",
+    "PartialMedia": "partial-media",
+    "FullMedia": "full-media"
+  }
+}
