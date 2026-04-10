@@ -1,0 +1,29 @@
+FROM --platform=linux/amd64 node:24-alpine AS base
+
+RUN apk --update --no-cache add --virtual .builds-deps build-base python3
+
+WORKDIR /opt/app/
+
+FROM base AS build
+
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+COPY . .
+
+RUN npm run build
+
+FROM base AS production
+
+COPY package.json package-lock.json ./
+
+RUN npm ci --omit=dev
+
+COPY --from=build /opt/app/dist ./dist
+
+ARG NODE_ENV
+
+ENV NODE_ENV=$NODE_ENV
+
+CMD [ "node", "dist/db/upgrade-jambonz-db.js" ]

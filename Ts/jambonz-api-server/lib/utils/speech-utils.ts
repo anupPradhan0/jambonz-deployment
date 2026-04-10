@@ -1,0 +1,1818 @@
+// @ts-nocheck
+const sttGoogle = require('@google-cloud/speech').v1p1beta1;
+const { TranscribeClient, ListVocabulariesCommand } = require('@aws-sdk/client-transcribe');
+const { Deepgram } = require('@deepgram/sdk');
+const sdk = require('microsoft-cognitiveservices-speech-sdk');
+const { SpeechClient } = require('@soniox/soniox-node');
+const fs = require('fs');
+const { AssemblyAI } = require('assemblyai');
+const Houndify = require('houndify');
+const { GladiaClient } = require('@gladiaio/sdk');
+const {decrypt, obscureKey} = require('./encrypt-decrypt');
+const { RealtimeSession } = require('speechmatics');
+
+const TtsGoogleLanguagesVoices = require('./speech-data/tts-google');
+const TtsAwsLanguagesVoices = require('./speech-data/tts-aws');
+const TtsMicrosoftLanguagesVoices = require('./speech-data/tts-microsoft');
+const TtsWellsaidLanguagesVoices = require('./speech-data/tts-wellsaid');
+const TtsNuanceLanguagesVoices = require('./speech-data/tts-nuance');
+const TtsIbmLanguagesVoices = require('./speech-data/tts-ibm');
+const TtsNvidiaLanguagesVoices = require('./speech-data/tts-nvidia');
+const TtsElevenlabsLanguagesVoices = require('./speech-data/tts-elevenlabs');
+const TtsWhisperLanguagesVoices = require('./speech-data/tts-whisper');
+const TtsPlayHtLanguagesVoices = require('./speech-data/tts-playht');
+const TtsVerbioLanguagesVoices = require('./speech-data/tts-verbio');
+const TtsInworldLanguagesVoices = require('./speech-data/tts-inworld');
+const ttsCartesia = require('./speech-data/tts-cartesia');
+const TtsResembleLanguagesVoices = require('./speech-data/tts-resemble');
+
+const TtsModelDeepgram = require('./speech-data/tts-model-deepgram');
+const TtsLanguagesDeepgram = require('./speech-data/tts-deepgram');
+const TtsModelElevenLabs = require('./speech-data/tts-model-elevenlabs');
+const TtsModelWhisper = require('./speech-data/tts-model-whisper');
+const TtsModelPlayHT = require('./speech-data/tts-model-playht');
+const ttsLanguagesPlayHt = require('./speech-data/tts-languages-playht');
+const TtsModelRimelabs = require('./speech-data/tts-model-rimelabs');
+const TtsModelInworld = require('./speech-data/tts-model-inworld');
+const TtsModelCartesia = require('./speech-data/tts-model-cartesia');
+const TtsModelOpenai = require('./speech-data/tts-model-openai');
+
+const SttGoogleLanguagesVoices = require('./speech-data/stt-google');
+const SttAwsLanguagesVoices = require('./speech-data/stt-aws');
+const SttMicrosoftLanguagesVoices = require('./speech-data/stt-microsoft');
+const SttNuanceLanguagesVoices = require('./speech-data/stt-nuance');
+const SttDeepgramLanguagesVoices = require('./speech-data/stt-deepgram');
+const SttIbmLanguagesVoices = require('./speech-data/stt-ibm');
+const SttNvidiaLanguagesVoices = require('./speech-data/stt-nvidia');
+const SttCobaltLanguagesVoices = require('./speech-data/stt-cobalt');
+const SttSonioxLanguagesVoices = require('./speech-data/stt-soniox');
+const SttSpeechmaticsLanguagesVoices = require('./speech-data/stt-speechmatics');
+const SttAssemblyaiLanguagesVoices = require('./speech-data/stt-assemblyai');
+const SttHoundifyLanguagesVoices = require('./speech-data/stt-houndify');
+const SttVoxistLanguagesVoices = require('./speech-data/stt-voxist');
+const SttVerbioLanguagesVoices = require('./speech-data/stt-verbio');
+const SttOpenaiLanguagesVoices = require('./speech-data/stt-openai');
+const SttGladiaLanguagesVoices = require('./speech-data/stt-gladia');
+
+
+const SttModelOpenai = require('./speech-data/stt-model-openai');
+const sttModelDeepgram = require('./speech-data/stt-model-deepgram');
+const sttModelCartesia = require('./speech-data/stt-model-cartesia');
+
+function capitalizeFirst(str) {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
+const testSonioxStt = async(logger, credentials) => {
+  const api_key = credentials;
+  const soniox = new SpeechClient(api_key);
+
+  return new Promise(async(resolve, reject) => {
+    try {
+      const result = await soniox.transcribeFileShort('data/test_audio.wav', {
+        model: 'en_v2'
+      });
+      if (result.words.length > 0) resolve(result);
+      else reject(new Error('no transcript returned'));
+    } catch (error) {
+      logger.info({error}, 'failed to get soniox transcript');
+      reject(error);
+    }
+  });
+};
+
+const testSpeechmaticsStt = async(logger, credentials) => {
+  const {api_key, speechmatics_stt_uri} = credentials;
+  return new Promise(async(resolve, reject) => {
+    try {
+      const session = new RealtimeSession({ apiKey: api_key, realtimeUrl: speechmatics_stt_uri });
+      let transcription = '';
+      session.addListener('Error', (error) => {
+        reject(error);
+      });
+
+      session.addListener('AddTranscript', (message) => {
+        transcription += message.metadata.transcript;
+      });
+
+      session.addListener('EndOfTranscript', () => {
+        resolve(transcription);
+      });
+
+      session
+        .start({
+          transcription_config: {
+            language: 'en',
+            operating_point: 'enhanced',
+            enable_partials: true,
+            max_delay: 2,
+          },
+          audio_format: { type: 'file' },
+        })
+        .then(() => {
+          //prepare file stream
+          const fileStream = fs.createReadStream(`${__dirname}/../../data/test_audio.wav`);
+
+          //send it
+          fileStream.on('data', (sample) => {
+            session.sendAudio(sample);
+          });
+
+          //end the session
+          fileStream.on('end', () => {
+            session.stop();
+          });
+
+          return;
+
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    } catch (error) {
+      logger.info({error}, 'failed to get speechmatics transcript');
+      reject(error);
+    }
+  });
+};
+
+const testNuanceTts = async(logger, getTtsVoices, credentials) => {
+  const voices = await getTtsVoices({vendor: 'nuance', credentials});
+  return voices;
+};
+const testNuanceStt = async(logger, credentials) => {
+  //TODO
+  return true;
+};
+
+const testGoogleTts = async(logger, getTtsVoices, credentials) => {
+  const voices = await getTtsVoices({vendor: 'google', credentials});
+  return voices;
+
+};
+
+const testGoogleStt = async(logger, credentials) => {
+  const client = new sttGoogle.SpeechClient({credentials});
+  const config = {
+    sampleRateHertz: 8000,
+    languageCode: 'en-US',
+    model: 'default',
+  };
+  const audio = {
+    content: fs.readFileSync(`${__dirname}/../../data/test_audio.wav`).toString('base64'),
+  };
+  const request = {
+    config: config,
+    audio: audio,
+  };
+
+  // Detects speech in the audio file
+  const [response] = await client.recognize(request);
+  if (!Array.isArray(response.results) || 0 === response.results.length) {
+    throw new Error('failed to transcribe speech');
+  }
+};
+
+const testGladiaStt = async(logger, credentials) => {
+  const {api_key} = credentials;
+
+  try {
+    const gladiaClient = new GladiaClient({
+      apiKey: api_key,
+    });
+    const gladiaConfig = {
+      model: 'solaria-1',
+      encoding: 'wav/pcm',
+      sample_rate: 16000,
+      bit_depth: 16,
+      channels: 1,
+      language_config: {
+        languages: ['en'],
+        code_switching: false,
+      },
+    };
+    // Start the live session
+    const liveSession = gladiaClient.liveV2().startSession(gladiaConfig);
+    // Read the test audio file
+    const audioBuffer = fs.readFileSync(`${__dirname}/../../data/test_audio.wav`);
+
+    // Wait for final transcript
+    return new Promise((resolve, reject) => {
+      liveSession.on('message', (message) => {
+        if (message.type === 'transcript' && message.data.is_final) {
+          logger.debug(`${message.data.id}: ${message.data.utterance.text}`);
+          liveSession.stopRecording();
+          resolve(message.data.utterance.text);
+        }
+      });
+
+      liveSession.on('error', (error) => {
+        logger.error({error}, 'Gladia Live STT error');
+        reject(error);
+      });
+
+      // Send audio in chunks
+      const chunkSize = 1024;
+      for (let i = 0; i < audioBuffer.length; i += chunkSize) {
+        const chunk = audioBuffer.slice(i, i + chunkSize);
+        liveSession.sendAudio(chunk);
+      }
+      // Stop recording after sending all audio
+      liveSession.stopRecording();
+
+      // Set a timeout to prevent hanging
+      setTimeout(() => {
+        reject(new Error('Gladia STT test timeout'));
+      }, 30000); // 30 second timeout
+    });
+
+  } catch (error) {
+    logger.error({error}, 'Failed to create Gladia Live STT session');
+    throw error;
+  }
+};
+
+const testDeepgramStt = async(logger, credentials) => {
+  const {api_key, deepgram_stt_uri, deepgram_stt_use_tls} = credentials;
+  const deepgram = new Deepgram(api_key, deepgram_stt_uri, deepgram_stt_uri && deepgram_stt_use_tls);
+
+  const mimetype = 'audio/wav';
+  const source = {
+    buffer: fs.readFileSync(`${__dirname}/../../data/test_audio.wav`),
+    mimetype: mimetype
+  };
+
+  return new Promise((resolve, reject) => {
+    // Send the audio to Deepgram and get the response
+    deepgram.transcription
+      .preRecorded(source, {punctuate: true})
+      .then((response) => {
+        //logger.debug({response}, 'got transcript');
+        if (response?.results?.channels[0]?.alternatives?.length > 0) resolve(response);
+        else reject(new Error('no transcript returned'));
+        return;
+      })
+      .catch((err) => {
+        logger.info({err}, 'failed to get deepgram transcript');
+        reject(err);
+      });
+  });
+};
+
+const testMicrosoftStt = async(logger, credentials) => {
+  const {api_key, region, use_custom_stt, custom_stt_endpoint_url} = credentials;
+  const speechConfig = use_custom_stt ? sdk.SpeechConfig.fromEndpoint(
+    new URL(custom_stt_endpoint_url), api_key) :
+    sdk.SpeechConfig.fromSubscription(api_key, region);
+  const audioConfig = sdk.AudioConfig.fromWavFileInput(fs.readFileSync(`${__dirname}/../../data/test_audio.wav`));
+  speechConfig.speechRecognitionLanguage = 'en-US';
+
+  if (process.env.JAMBONES_HTTP_PROXY_IP && process.env.JAMBONES_HTTP_PROXY_PORT) {
+    logger.debug(
+      `testMicrosoftStt: using proxy ${process.env.JAMBONES_HTTP_PROXY_IP}:${process.env.JAMBONES_HTTP_PROXY_PORT}`);
+    speechConfig.setProxy(process.env.JAMBONES_HTTP_PROXY_IP, process.env.JAMBONES_HTTP_PROXY_PORT);
+  }
+
+  const speechRecognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig);
+
+  return new Promise((resolve, reject) => {
+    speechRecognizer.recognizeOnceAsync((result) => {
+      switch (result.reason) {
+        case sdk.ResultReason.RecognizedSpeech:
+          resolve();
+          break;
+        case sdk.ResultReason.NoMatch:
+          reject('Speech could not be recognized.');
+          break;
+        case sdk.ResultReason.Canceled:
+          const cancellation = sdk.CancellationDetails.fromResult(result);
+          logger.info(`CANCELED: Reason=${cancellation.reason}`);
+          if (cancellation.reason == sdk.CancellationReason.Error) {
+            logger.info(`CANCELED: ErrorCode=${cancellation.ErrorCode}`);
+            logger.info(`CANCELED: ErrorDetails=${cancellation.errorDetails}`);
+          }
+          reject(cancellation.reason);
+          break;
+      }
+      speechRecognizer.close();
+    });
+  });
+};
+
+const testAwsTts = async(logger, getTtsVoices, credentials) => {
+  try {
+    const voices = await getTtsVoices({vendor: 'aws', credentials});
+    return voices;
+  } catch (err) {
+    logger.info({err}, 'testMicrosoftTts - failed to list voices for region ${region}');
+    throw err;
+  }
+};
+
+const testAwsStt = async(logger, getAwsAuthToken, credentials) => {
+  try {
+    const {region, accessKeyId, secretAccessKey, roleArn} = credentials;
+    let client = null;
+    if (accessKeyId && secretAccessKey) {
+      client = new TranscribeClient({
+        region,
+        credentials: {
+          accessKeyId,
+          secretAccessKey
+        }
+      });
+    } else if (roleArn) {
+      client = new TranscribeClient({
+        region,
+        credentials: await getAwsAuthToken({
+          region,
+          roleArn
+        }),
+      });
+    } else {
+      client = new TranscribeClient({region});
+    }
+    const command = new ListVocabulariesCommand({});
+    const response =  await client.send(command);
+    return response;
+  } catch (err) {
+    logger.info({err}, 'testAwsStt - failed to list voices for region ${region}');
+    throw err;
+  }
+};
+
+const testMicrosoftTts = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio({increment: () => {}, histogram: () => {}},
+      {
+        vendor: 'microsoft',
+        credentials,
+        language: 'en-US',
+        voice: 'en-US-JennyMultilingualNeural',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+  } catch (err) {
+    logger.info({err}, 'testMicrosoftTts returned error');
+    throw err;
+  }
+};
+
+const testWellSaidTts = async(logger, credentials) => {
+  const {api_key} = credentials;
+  const response = await fetch('https://api.wellsaidlabs.com/v1/tts/stream', {
+    method: 'POST',
+    headers: {
+      'X-Api-Key': api_key,
+      'Accept': 'audio/mpeg',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      text: 'Hello, world',
+      speaker_id: '3'
+    })
+  });
+  if (!response.ok) {
+    throw new Error('failed to synthesize speech');
+  }
+  return response.body;
+};
+
+const testElevenlabs = async(logger, credentials) => {
+  const {api_key, model_id, api_uri} = credentials;
+  const response = await fetch(`https://${api_uri || 'api.elevenlabs.io'}/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM`, {
+    method: 'POST',
+    headers: {
+      'xi-api-key': api_key,
+      'Accept': 'audio/mpeg',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      text: 'Hello',
+      model_id,
+      voice_settings: {
+        stability: 0.5,
+        similarity_boost: 0.5
+      }
+    })
+  });
+  if (!response.ok) {
+    throw new Error('failed to synthesize speech');
+  }
+  return response.body;
+};
+
+const testPlayHT = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio(
+      {
+        increment: () => {},
+        histogram: () => {}
+      },
+      {
+        vendor: 'playht',
+        credentials,
+        language: 'english',
+        voice: 's3://voice-cloning-zero-shot/d9ff78ba-d016-47f6-b0ef-dd630f59414e/female-cs/manifest.json',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+    // Test if playHT can fetch voices
+    await fetchLayHTVoices(credentials);
+  } catch (err) {
+    logger.info({err}, 'synth Playht returned error');
+    throw err;
+  }
+};
+
+const testRimelabs = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio(
+      {
+        increment: () => {},
+        histogram: () => {}
+      },
+      {
+        vendor: 'rimelabs',
+        credentials,
+        language: 'eng',
+        voice: 'amber',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+  } catch (err) {
+    logger.info({err}, 'synth rimelabs returned error');
+    throw err;
+  }
+};
+
+const testInworld = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio(
+      {
+        increment: () => {},
+        histogram: () => {}
+      },
+      {
+        vendor: 'inworld',
+        credentials,
+        language: 'en',
+        voice: 'Ashley',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+  } catch (err) {
+    logger.info({err}, 'synth inworld returned error');
+    throw err;
+  }
+};
+
+const testWhisper = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio({increment: () => {}, histogram: () => {}},
+      {
+        vendor: 'whisper',
+        credentials,
+        language: 'en-US',
+        voice: 'alloy',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+  } catch (err) {
+    logger.info({err}, 'synth whisper returned error');
+    throw err;
+  }
+};
+
+const testResembleTTS = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio({increment: () => {}, histogram: () => {}},
+      {
+        vendor: 'resemble',
+        credentials,
+        language: 'en-US',
+        voice: '3f5fb9f1',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+  } catch (err) {
+    logger.info({err}, 'synth resemble returned error');
+    throw err;
+  }
+};
+
+const testDeepgramTTS = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio({increment: () => {}, histogram: () => {}},
+      {
+        vendor: 'deepgram',
+        credentials,
+        model: 'aura-asteria-en',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+  } catch (err) {
+    logger.info({err}, 'testDeepgramTTS returned error');
+    throw err;
+  }
+};
+
+const testIbmTts = async(logger, getTtsVoices, credentials) => {
+  const {tts_api_key, tts_region} = credentials;
+  const voices = await getTtsVoices({vendor: 'ibm', credentials: {tts_api_key, tts_region}});
+  return voices;
+};
+
+const testIbmStt = async(logger, credentials) => {
+  const {stt_api_key, stt_region} = credentials;
+  const SpeechToTextV1 = require('ibm-watson/speech-to-text/v1');
+  const { IamAuthenticator } = require('ibm-watson/auth');
+  const speechToText = new SpeechToTextV1({
+    authenticator: new IamAuthenticator({
+      apikey: stt_api_key
+    }),
+    serviceUrl: `https://api.${stt_region}.speech-to-text.watson.cloud.ibm.com`
+  });
+  return new Promise((resolve, reject) => {
+    speechToText.listModels()
+      .then((speechModels) => {
+        logger.debug({speechModels}, 'got IBM speech models');
+        return resolve();
+      })
+      .catch((err) => {
+        logger.info({err}, 'failed to get speech models');
+        reject(err);
+      });
+  });
+};
+
+const testWellSaidStt = async(logger, credentials) => {
+  //TODO
+  return true;
+};
+
+const testVerbioTts = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio(
+      {
+        increment: () => {},
+        histogram: () => {}
+      },
+      {
+        vendor: 'verbio',
+        credentials,
+        language: 'en-US',
+        voice: 'tommy_en-us',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+  } catch (err) {
+    logger.info({err}, 'synth Verbio returned error');
+    throw err;
+  }
+};
+const testVerbioStt = async(logger, getVerbioAccessToken, credentials) => {
+  const token = await getVerbioAccessToken(credentials);
+  const response = await fetch('https://us.rest.speechcenter.verbio.com/api/v1/recognize?language=en-US&version=V1', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token.access_token}`,
+      'User-Agent': 'jambonz',
+      'Content-Type': 'audio/wav'
+    },
+    body: fs.readFileSync(`${__dirname}/../../data/test_audio.wav`)
+  });
+  if (!response.ok) {
+    logger.error({Error: await response.text()}, 'Error transcribing speech');
+    throw new Error('failed to transcribe speech');
+  }
+};
+
+const testOpenAiStt = async(logger, credentials) => {
+  const {api_key} = credentials;
+  try {
+    // Create a FormData object to properly format the multipart request
+    const formData = new FormData();
+
+    // Add the audio file as 'file' field
+    const audioBuffer = fs.readFileSync(`${__dirname}/../../data/test_audio.wav`);
+    const blob = new Blob([audioBuffer], { type: 'audio/wav' });
+    formData.append('file', blob, 'audio.wav');
+
+    // Add the model parameter (required by OpenAI)
+    formData.append('model', 'whisper-1');
+
+    // Make the request using fetch
+    const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${api_key}`,
+        'User-Agent': 'jambonz'
+      },
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`OpenAI API error: ${response.status} ${(await response.json()).error?.message}`);
+    }
+
+    const json = await response.json();
+    logger.debug({json}, 'successfully speech to text from OpenAI');
+    return json;
+  } catch (err) {
+    logger.info({err}, 'OpenAI speech-to-text request failed');
+    throw err;
+  }
+};
+
+const testAssemblyStt = async(logger, credentials) => {
+  const {api_key} = credentials;
+
+  const assemblyai = new AssemblyAI({
+    apiKey: api_key
+  });
+
+  const audioUrl = `${__dirname}/../../data/test_audio.wav`;
+
+  return new Promise((resolve, reject) => {
+    assemblyai.transcripts
+      .create({ audio_url: audioUrl })
+      .then((transcript) => {
+        logger.debug({transcript}, 'got transcription from AssemblyAi');
+        if (transcript.status === 'error') {
+          return reject({message: transcript.error});
+        }
+        return resolve(transcript.text);
+      })
+      .catch((err) => {
+        logger.info({err}, 'failed to get assemblyAI transcription');
+        reject(err);
+      });
+  });
+};
+
+const testHoundifyStt = async(logger, credentials) => {
+  const {client_id, client_key, user_id, houndify_server_uri} = credentials;
+
+  return new Promise((resolve, reject) => {
+    // api-server use houndify js sdk, which connect to wss server
+    // freeswitch modules use houndify c/c++ sdk, which connect to https server
+    // we cannot test credentials on https server here.
+    if (houndify_server_uri) {
+      return true;
+    }
+
+    try {
+      // Read the test audio file
+      const audioBuffer = fs.readFileSync(`${__dirname}/../../data/test_audio.wav`);
+
+      // Create VoiceRequest for speech-to-text testing
+      const voiceRequest = new Houndify.VoiceRequest({
+        // Your Houndify Client ID and Key
+        clientId: client_id,
+        clientKey: client_key,
+
+        // Request info
+        requestInfo: {
+          UserID: user_id || 'test_user',
+          Latitude: 37.388309,
+          Longitude: -121.973968,
+        },
+
+        // Audio format configuration
+        sampleRate: 16000,
+        enableVAD: true,
+
+        // Response and error handlers
+        onResponse: function(response, info) {
+          logger.debug({response, info}, 'Houndify STT response received');
+          if (response && response.AllResults && response.AllResults.length > 0) {
+            resolve(response);
+          } else {
+            reject(new Error('No transcription results received'));
+          }
+        },
+
+        onError: function(err, info) {
+          logger.error({err, info}, 'Houndify STT error');
+          reject(err);
+        },
+
+        onRecordingStarted: function() {
+          logger.debug('Houndify recording started');
+        },
+
+        onRecordingStopped: function() {
+          logger.debug('Houndify recording stopped');
+        }
+      });
+
+      // Send audio in chunks (VoiceRequest automatically starts when you write data)
+      const chunkSize = 1024;
+      for (let i = 0; i < audioBuffer.length; i += chunkSize) {
+        const chunk = audioBuffer.slice(i, i + chunkSize);
+        voiceRequest.write(chunk);
+      }
+
+      // End the request
+      voiceRequest.end();
+
+    } catch (error) {
+      logger.error({error}, 'Failed to create Houndify VoiceRequest');
+      reject(error);
+    }
+  });
+};
+
+const testVoxistStt = async(logger, credentials) => {
+  const {api_key} = credentials;
+  const response = await fetch('https://api-asr.voxist.com/clients', {
+    headers: {
+      'Accept': 'application/json',
+      'x-lvl-key': api_key
+    }
+  });
+  if (!response.ok) {
+    logger.error({response}, 'Error retrieving clients');
+    throw new Error('failed to get clients');
+  }
+  return response.json();
+};
+
+const getSpeechCredential = (credential, logger) => {
+  const {vendor} = credential;
+  logger.info(
+    `Speech vendor: ${credential.vendor} ${credential.label ? `, label: ${credential.label}` : ''} selected`);
+  if ('google' === vendor) {
+    try {
+      const cred = JSON.parse(credential.service_key.replace(/\n/g, '\\n'));
+      return {
+        ...credential,
+        credentials: cred
+      };
+    } catch (err) {
+      logger.info({err}, `malformed google service_key provisioned for account ${credential.speech_credential_sid}`);
+    }
+  }
+  else if (['aws', 'polly'].includes(vendor)) {
+    return {
+      ...credential,
+      accessKeyId: credential.access_key_id,
+      secretAccessKey: credential.secret_access_key,
+      roleArn: credential.role_arn,
+      region: credential.aws_region || 'us-east-1'
+    };
+  }
+  return credential;
+};
+
+function decryptCredential(obj, credential, logger, isObscureKey = true) {
+  if ('google' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    const key_header = '-----BEGIN PRIVATE KEY-----\n';
+    const obscured = {
+      ...o,
+      private_key: `${key_header}${isObscureKey ?
+        obscureKey(o.private_key.slice(key_header.length, o.private_key.length)) :
+        o.private_key.slice(key_header.length, o.private_key.length)}`
+    };
+    obj.service_key = JSON.stringify(obscured);
+    obj.model_id = o.model_id || null;
+  }
+  else if ('aws' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.access_key_id = o.access_key_id;
+    obj.role_arn = o.role_arn;
+    obj.secret_access_key = isObscureKey ? obscureKey(o.secret_access_key) : o.secret_access_key;
+    obj.aws_region = o.aws_region;
+  }
+  else if ('microsoft' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.region = o.region;
+    obj.use_custom_tts = o.use_custom_tts;
+    obj.custom_tts_endpoint = o.custom_tts_endpoint;
+    obj.custom_tts_endpoint_url = o.custom_tts_endpoint_url;
+    obj.use_custom_stt = o.use_custom_stt;
+    obj.custom_stt_endpoint = o.custom_stt_endpoint;
+    obj.custom_stt_endpoint_url = o.custom_stt_endpoint_url;
+  }
+  else if ('wellsaid' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+  }
+  else if ('nuance' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.client_id = o.client_id;
+    obj.secret = o.secret ? (isObscureKey ? obscureKey(o.secret) : o.secret) : null;
+    obj.nuance_tts_uri = o.nuance_tts_uri;
+    obj.nuance_stt_uri = o.nuance_stt_uri;
+  }
+  else if ('deepgram' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.deepgram_stt_uri = o.deepgram_stt_uri;
+    obj.deepgram_stt_use_tls = o.deepgram_stt_use_tls;
+    obj.deepgram_tts_uri = o.deepgram_tts_uri;
+    obj.model_id = o.model_id;
+  }
+  else if ('deepgramflux' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+  }
+  else if ('gladia' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+  }
+  else if ('ibm' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.tts_api_key = isObscureKey ? obscureKey(o.tts_api_key) : o.tts_api_key;
+    obj.tts_region = o.tts_region;
+    obj.stt_api_key = isObscureKey ? obscureKey(o.stt_api_key) : o.stt_api_key;
+    obj.stt_region = o.stt_region;
+    obj.instance_id = o.instance_id;
+  } else if ('nvidia' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.riva_server_uri = o.riva_server_uri;
+  } else if ('cobalt' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.cobalt_server_uri = o.cobalt_server_uri;
+  } else if ('soniox' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+  } else if ('speechmatics' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.speechmatics_stt_uri = o.speechmatics_stt_uri;
+  } else if ('elevenlabs' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.model_id = o.model_id;
+    obj.api_uri = o.api_uri;
+    obj.options = o.options;
+  } else if ('playht' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.user_id = o.user_id;
+    obj.voice_engine = o.voice_engine;
+    obj.playht_tts_uri = o.playht_tts_uri;
+    obj.options = o.options;
+  } else if ('cartesia' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.model_id = o.model_id;
+    obj.stt_model_id = o.stt_model_id;
+    obj.options = o.options;
+  } else if ('inworld' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.model_id = o.model_id;
+    obj.options = o.options;
+  } else if ('rimelabs' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.model_id = o.model_id;
+    obj.options = o.options;
+  } else if (obj.vendor.startsWith('custom:')) {
+    const o = JSON.parse(decrypt(credential));
+    obj.auth_token = isObscureKey ? obscureKey(o.auth_token) : o.auth_token;
+    obj.custom_stt_url = o.custom_stt_url;
+    obj.custom_tts_url = o.custom_tts_url;
+    obj.custom_tts_streaming_url = o.custom_tts_streaming_url;
+  } else if ('assemblyai' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.service_version = o.service_version;
+  } else if ('houndify' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.client_key = isObscureKey ? obscureKey(o.client_key) : o.client_key;
+    obj.client_id = o.client_id;
+    obj.user_id = o.user_id;
+    obj.houndify_server_uri = o.houndify_server_uri;
+  } else if ('resemble' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.resemble_tts_uri = o.resemble_tts_uri;
+    obj.resemble_tts_use_tls = o.resemble_tts_use_tls;
+  } else if ('voxist' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+  } else if ('whisper' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.model_id = o.model_id;
+  } else if ('openai' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.api_key = isObscureKey ? obscureKey(o.api_key) : o.api_key;
+    obj.model_id = o.model_id;
+  } else if ('verbio' === obj.vendor) {
+    const o = JSON.parse(decrypt(credential));
+    obj.client_id = o.client_id;
+    obj.client_secret = isObscureKey ? obscureKey(o.client_secret) : o.client_secret;
+    obj.engine_version = o.engine_version;
+  }
+}
+
+/**
+ *
+ * @param {*} logger logger
+ * @param {*} vendor vendor
+ * @param {*} credential STT/TTS vendor credential, can be null
+ * @returns List of language and coresponding voices for specific vendor follow below format
+ *  {
+      "tts": [
+        {
+          code: "ar-XA",
+          name: "Arabic",
+          voices: [
+            { value: "ar-XA-Standard-A", name: "Standard-A (Female)" },
+          ]
+        }
+      ],
+      "stt": [
+        { name: "Afrikaans (South Africa)", code: "af-ZA" },
+      ]
+    }
+ */
+async function getLanguagesAndVoicesForVendor(logger, vendor, credential, getTtsVoices) {
+  switch (vendor) {
+    case 'google':
+      return await getLanguagesVoicesForGoogle(credential, getTtsVoices, logger);
+    case 'aws':
+      return await getLanguagesVoicesForAws(credential, getTtsVoices, logger);
+    case 'microsoft':
+      return await getLanguagesVoicesForMicrosoft(credential, getTtsVoices, logger);
+    case 'wellsaid':
+      return await getLanguagesVoicesForWellsaid(credential, getTtsVoices, logger);
+    case 'nuance':
+      return await getLanguagesVoicesForNuane(credential, getTtsVoices, logger);
+    case 'deepgram':
+      return await getLanguagesVoicesForDeepgram(credential, getTtsVoices, logger);
+    case 'gladia':
+      return await getLanguagesVoicesForGladia(credential, getTtsVoices, logger);
+    case 'ibm':
+      return await getLanguagesVoicesForIbm(credential, getTtsVoices, logger);
+    case 'nvidia':
+      return await getLanguagesVoicesForNvida(credential, getTtsVoices, logger);
+    case 'cobalt':
+      return await getLanguagesVoicesForCobalt(credential, getTtsVoices, logger);
+    case 'soniox':
+      return await getLanguagesVoicesForSoniox(credential, getTtsVoices, logger);
+    case 'elevenlabs':
+      return await getLanguagesVoicesForElevenlabs(credential, getTtsVoices, logger);
+    case 'playht':
+      return await getLanguagesVoicesForPlayHT(credential, getTtsVoices, logger);
+    case 'rimelabs':
+      return await getLanguagesVoicesForRimelabs(credential, getTtsVoices, logger);
+    case 'inworld':
+      return await getLanguagesVoicesForInworld(credential, getTtsVoices, logger);
+    case 'resemble':
+      return await getLanguagesAndVoicesForResemble(credential, getTtsVoices, logger);
+    case 'assemblyai':
+      return await getLanguagesVoicesForAssemblyAI(credential, getTtsVoices, logger);
+    case 'houndify':
+      return await getLanguagesVoicesForHoundify(credential, getTtsVoices, logger);
+    case 'voxist':
+      return await getLanguagesVoicesForVoxist(credential, getTtsVoices, logger);
+    case 'whisper':
+      return await getLanguagesVoicesForWhisper(credential, getTtsVoices, logger);
+    case 'openai':
+      return await getLanguagesVoicesForOpenAi(credential, getTtsVoices, logger);
+    case 'verbio':
+      return await getLanguagesVoicesForVerbio(credential, getTtsVoices, logger);
+    case 'speechmatics':
+      return await getLanguagesVoicesForSpeechmatics(credential, getTtsVoices, logger);
+    case 'cartesia':
+      return await getLanguagesVoicesForCartesia(credential, getTtsVoices, logger);
+    default:
+      logger.info(`invalid vendor ${vendor}, return empty result`);
+      throw new Error(`Invalid vendor ${vendor}`);
+  }
+}
+
+async function getLanguagesVoicesForGoogle(credential, getTtsVoices, logger) {
+  if (credential) {
+    try {
+      const [result] = await getTtsVoices({
+        vendor: 'google',
+        credentials: credential
+      });
+      const tts = parseGooglelanguagesVoices(result.voices);
+      return tranform(tts, SttGoogleLanguagesVoices);
+    } catch (err) {
+      logger.info('Error while fetching google languages, voices, return predefined values', err);
+    }
+  }
+  return tranform(TtsGoogleLanguagesVoices, SttGoogleLanguagesVoices);
+}
+
+async function getLanguagesVoicesForAws(credential, getTtsVoices, logger) {
+  if (credential) {
+    try {
+      const result = await getTtsVoices({
+        vendor: 'aws',
+        credentials: {
+          accessKeyId: credential.access_key_id,
+          secretAccessKey: credential.secret_access_key,
+          roleArn: credential.role_arn,
+          region: credential.aws_region || process.env.AWS_REGION
+        }
+      });
+      const tts = parseAwsLanguagesVoices(result.Voices);
+      return tranform(tts, SttAwsLanguagesVoices);
+    } catch (err) {
+      logger.info('Error while fetching AWS languages, voices, return predefined values', err);
+    }
+  }
+  return tranform(TtsAwsLanguagesVoices, SttAwsLanguagesVoices);
+}
+
+async function getLanguagesVoicesForMicrosoft(credential, getTtsVoices, logger) {
+  if (credential) {
+    const {region, api_key} = credential;
+    const response = await fetch(`https://${region}.tts.speech.microsoft.com/cognitiveservices/voices/list`, {
+      headers: {
+        'Ocp-Apim-Subscription-Key': api_key
+      }
+    });
+    if (!response.ok) {
+      logger.error({response}, 'Error fetching Microsoft voices');
+      throw new Error('failed to list voices');
+    }
+    const voices = await response.json();
+    const tts = parseMicrosoftLanguagesVoices(voices);
+    return tranform(tts, SttMicrosoftLanguagesVoices);
+  }
+  return tranform(TtsMicrosoftLanguagesVoices, SttMicrosoftLanguagesVoices);
+}
+
+async function getLanguagesVoicesForWellsaid(credential) {
+  return tranform(TtsWellsaidLanguagesVoices);
+}
+
+async function getLanguagesVoicesForNuane(credential, getTtsVoices, logger) {
+  if (credential) {
+    try {
+      const result = await getTtsVoices({
+        vendor: 'nuance',
+        credentials: credential
+      });
+      const tts = parseNuanceLanguagesVoices(result.result.voices);
+      return tranform(tts, SttNuanceLanguagesVoices);
+    } catch (err) {
+      logger.info('Error while fetching IBM languages, voices, return predefined values', err);
+    }
+  }
+  return tranform(TtsNuanceLanguagesVoices, SttNuanceLanguagesVoices);
+}
+
+async function getLanguagesVoicesForDeepgram(credential, getTtsVoices, logger) {
+  if (credential) {
+    const {model_id, api_key, deepgram_stt_uri, deepgram_tts_uri} = credential;
+    // currently just fetching STT and TTS models from Deepgram cloud
+    if (!deepgram_stt_uri && !deepgram_tts_uri) {
+      const response = await fetch('https://api.deepgram.com/v1/models', {
+        headers: {
+          'Authorization': `Token ${api_key}`
+        }
+      });
+      if (!response.ok) {
+        logger.error({response}, 'Error fetching Deepgram voices');
+        throw new Error('failed to list voices');
+      }
+      const {stt, tts, languages} = await response.json();
+      // Helper function to get language name
+      const getLanguageName = (langCode) => {
+        if (languages && languages[langCode]) {
+          return languages[langCode];
+        }
+        const existingLang = SttDeepgramLanguagesVoices.find((l) => l.value === langCode);
+        return existingLang ? existingLang.name : capitalizeFirst(langCode);
+      };
+      // Collect unique languages from selected models
+      const allSttLanguages = new Set();
+      const modelsToProcess = model_id ?
+        stt.filter((m) => m.canonical_name === model_id) :
+        stt;
+      modelsToProcess.forEach((model) => {
+        if (model.languages && Array.isArray(model.languages)) {
+          model.languages.forEach((lang) => allSttLanguages.add(lang));
+        }
+      });
+      // Convert to expected format
+      const sttLangs = Array.from(allSttLanguages).map((langCode) => ({
+        name: getLanguageName(langCode),
+        value: langCode
+      })).sort((a, b) => a.name.localeCompare(b.name));
+      const sttModels = Array.from(
+        new Map(
+          stt.map((m) => [m.canonical_name, { name: capitalizeFirst(m.canonical_name), value: m.canonical_name }])
+        ).values()
+      ).sort((a, b) => a.name.localeCompare(b.name));
+      const ttsModels = Array.from(
+        new Map(
+          tts.map((m) => [m.canonical_name, { name: capitalizeFirst(m.canonical_name), value: m.canonical_name }])
+        ).values()
+      ).sort((a, b) => a.name.localeCompare(b.name));
+      return tranform(TtsLanguagesDeepgram, sttLangs, ttsModels, sttModels);
+    }
+  }
+  return tranform(TtsLanguagesDeepgram, SttDeepgramLanguagesVoices,
+    TtsModelDeepgram, sttModelDeepgram.sort((a, b) => a.name.localeCompare(b.name)));
+}
+
+async function getLanguagesVoicesForGladia(credential, getTtsVoices, logger) {
+  return tranform(undefined, SttGladiaLanguagesVoices.sort((a, b) => a.name.localeCompare(b.name)),
+    undefined, undefined);
+}
+
+async function getLanguagesVoicesForIbm(credential, getTtsVoices, logger) {
+  if (credential) {
+    try {
+      const result = await getTtsVoices({
+        vendor: 'ibm',
+        credentials: credential
+      });
+      const tts = parseIBMLanguagesVoices(result.result.voices);
+      return tranform(tts, SttIbmLanguagesVoices);
+    } catch (err) {
+      logger.info('Error while fetching IBM languages, voices, return predefined values', err);
+    }
+  }
+  return tranform(TtsIbmLanguagesVoices, SttIbmLanguagesVoices);
+}
+
+async function getLanguagesVoicesForNvida(credential) {
+  return tranform(TtsNvidiaLanguagesVoices, SttNvidiaLanguagesVoices);
+}
+
+async function getLanguagesVoicesForCobalt(credential) {
+  return tranform(undefined, SttCobaltLanguagesVoices);
+}
+
+async function getLanguagesVoicesForSoniox(credential) {
+  return tranform(undefined, SttSonioxLanguagesVoices);
+}
+
+async function getLanguagesVoicesForSpeechmatics(credential) {
+  return tranform(undefined, SttSpeechmaticsLanguagesVoices);
+}
+
+async function getLanguagesVoicesForElevenlabs(credential) {
+  if (credential) {
+    const headers =  {
+      'xi-api-key': credential.api_key
+    };
+
+    const api_uri = credential.api_uri || 'api.elevenlabs.io';
+
+    const getModelPromise = fetch(`https://${api_uri}/v1/models`, {
+      headers
+    });
+    const getVoicePromise = fetch(`https://${api_uri}/v1/voices`, {
+      headers
+    });
+    const [langResp, voiceResp] = await Promise.all([getModelPromise, getVoicePromise]);
+
+    if (!langResp.ok || !voiceResp.ok) {
+      throw new Error('failed to list voices');
+    }
+
+    const langs = await langResp.json();
+    const voicesR = await voiceResp.json();
+
+    const model = langs.find((m) => m.model_id === credential.model_id);
+    const models = langs.map((m) => {
+      return {
+        value: m.model_id,
+        name: m.name
+      };
+    }).sort((a, b) => a.name.localeCompare(b.name));
+
+    const languages = model ? model.languages.map((l) => {
+      return {
+        value: l.language_id,
+        name: l.name
+      };
+    }).sort((a, b) => a.name.localeCompare(b.name)) : [];
+
+    if (languages && languages.length > 0) {
+      // using if condition to avoid \n character in name
+      const voices = voicesR ? voicesR.voices.map((v) => {
+        let name = `${v.name}${v.category !== 'premade' ? ` (${v.category.trim()})` : ''} - (`;
+        if (v.labels.accent) name += `${v.labels.accent}, `;
+        if (v.labels.description) name += `${v.labels.description}, `;
+        if (v.labels.age) name += `${v.labels.age}, `;
+        if (v.labels.gender) name += `${v.labels.gender}, `;
+        if (v.labels['use case']) name += `${v.labels['use case']}, `;
+
+        const lastIndex = name.lastIndexOf(',');
+        if (lastIndex !== -1) {
+          name = name.substring(0, lastIndex);
+        }
+        name += ')';
+        return {
+          value: v.voice_id,
+          name
+        };
+      }).sort((a, b) => a.name.localeCompare(b.name)) : [];
+      for (const language of languages) {
+        language.voices = voices;
+      }
+    }
+    return tranform(languages, undefined, models);
+  } else {
+    const voices = TtsElevenlabsLanguagesVoices[0].voices;
+    for (const language of TtsElevenlabsLanguagesVoices) {
+      language.voices = voices;
+    }
+    return tranform(TtsElevenlabsLanguagesVoices, undefined, TtsModelElevenLabs);
+  }
+}
+
+const concat = (a) => {
+  return a ? ` ${a},` : '';
+};
+
+const fetchLayHTVoices = async(credential) => {
+  if (credential) {
+    const headers = {
+      'AUTHORIZATION': credential.api_key,
+      'X-USER-ID': credential.user_id,
+      'Accept': 'application/json'
+    };
+    const response = await fetch('https://api.play.ht/api/v2/voices', {
+      headers
+    });
+    if (!response.ok) {
+      throw new Error('failed to list voices');
+    }
+    const voices = await response.json();
+    let clone_voices = [];
+    try {
+      // try if the account has permission to cloned voice
+      //otherwise ignore this.
+      const clone_voices_Response = await fetch('https://api.play.ht/api/v2/cloned-voices', {
+        headers
+      });
+      if (clone_voices_Response.ok) {
+        clone_voices = await clone_voices_Response.json();
+      }
+    } catch {}
+    return [clone_voices, voices];
+  }
+};
+
+async function getLanguagesVoicesForPlayHT(credential) {
+  if (credential) {
+    const {voice_engine} = credential;
+    const [cloned_voice, voices] = await fetchLayHTVoices(credential);
+    const list_voices = [...cloned_voice, ...voices];
+
+    const buildVoice = (d) => {
+      let name = `${d.name} - (${concat(d.accent)}${concat(d.age)}${concat(d.gender)}${concat(d.loudness)}` +
+      `${concat(d.style)}${concat(d.tempo)}${concat(d.texture)}` ;
+      name = name.endsWith(',') ? name.trim().slice(0, -1) : name;
+      name += !d.language_code ? ' - Custom Voice' : '';
+      name += ')';
+      name = name.replaceAll('( ', '(');
+
+      return {
+        value: `${d.id}`,
+        name
+      };
+    };
+
+    const buildPlay30Payload = () => {
+      // PlayHT3.0 can play different languages with differrent voice.
+      // all voices will be added to english language by default and orther langauges will get voices from english.
+      const ttsVoices = ttsLanguagesPlayHt.map((l) => ({
+        ...l,
+        voices: l.value === 'english' ? list_voices.map((v) => buildVoice(v)) : []
+      }));
+      return tranform(ttsVoices, undefined, TtsModelPlayHT);
+    };
+
+    const buildPayload = () => {
+      const ttsVoices = list_voices.reduce((acc, voice) => {
+        if (!voice_engine.includes(voice.voice_engine)) {
+          return acc;
+        }
+        const languageCode = voice.language_code;
+        // custom voice does not have language code
+        if (!languageCode) {
+          voice.language_code = 'en';
+          voice.language = 'Custom-English';
+        }
+        const existingLanguage = acc.find((lang) => lang.value === languageCode);
+        if (existingLanguage) {
+          existingLanguage.voices.push(buildVoice(voice));
+        } else {
+          acc.push({
+            value: voice.language_code,
+            name: voice.language,
+            voices: [buildVoice(voice)]
+          });
+        }
+        return acc;
+      }, []);
+      return tranform(ttsVoices, undefined, TtsModelPlayHT);
+    };
+
+    switch (voice_engine) {
+      case 'Play3.0':
+        return buildPlay30Payload();
+
+      default:
+        return buildPayload();
+    }
+  }
+  return tranform(TtsPlayHtLanguagesVoices, undefined, TtsModelPlayHT);
+}
+
+async function getLanguagesVoicesForRimelabs(credential) {
+  const model_id = credential ? credential.model_id : null;
+  const response = await fetch('https://users.rime.ai//data/voices/all-v2.json', {
+    headers: {
+      'Accept': 'application/json'
+    }
+  });
+  if (!response.ok) {
+    throw new Error('failed to list models');
+  }
+  const voices = await response.json();
+  const modelVoices = model_id ? voices[model_id] :
+    Object.keys(voices).length > 0 ? voices[Object.keys(voices)[0]] : [];
+  const ttsVoices = Object.entries(modelVoices).map(([key, voices]) => ({
+    value: key,
+    name: capitalizeFirst(key),
+    voices: voices.map((v) => ({
+      name: capitalizeFirst(v),
+      value: v
+    }))
+  }));
+  return tranform(ttsVoices, undefined, TtsModelRimelabs);
+}
+
+async function getLanguagesVoicesForInworld(credential) {
+  const api_key = credential ? credential.api_key : null;
+  if (!api_key) {
+    return tranform(TtsInworldLanguagesVoices, undefined, TtsModelInworld);
+  }
+  const response = await fetch('https://api.inworld.ai/tts/v1/voices', {
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': `Basic ${api_key}`
+    }
+  });
+  if (!response.ok) {
+    throw new Error('failed to list models');
+  }
+  const data = await response.json();
+
+  const ttsVoices = data.voices.reduce((acc, voice) => {
+    // Process each language for this voice
+    voice.languages.forEach((languageCode) => {
+      const existingLanguage = acc.find((lang) => lang.value === languageCode);
+      const voiceEntry = {
+        name: voice.displayName || capitalizeFirst(voice.voiceId),
+        value: voice.voiceId
+      };
+
+      if (existingLanguage) {
+        existingLanguage.voices.push(voiceEntry);
+      } else {
+        acc.push({
+          value: languageCode,
+          name: capitalizeFirst(languageCode),
+          voices: [voiceEntry]
+        });
+      }
+    });
+    return acc;
+  }, []);
+  return tranform(ttsVoices, undefined, TtsModelInworld);
+}
+
+async function getLanguagesVoicesForAssemblyAI(credential) {
+  return tranform(undefined, SttAssemblyaiLanguagesVoices);
+}
+
+async function getLanguagesVoicesForHoundify(credential) {
+  return tranform(undefined, SttHoundifyLanguagesVoices);
+}
+
+async function getLanguagesVoicesForVoxist(credential) {
+  return tranform(undefined, SttVoxistLanguagesVoices);
+}
+
+async function getLanguagesVoicesForWhisper(credential) {
+  return tranform(TtsWhisperLanguagesVoices, undefined, TtsModelWhisper);
+}
+
+async function getLanguagesVoicesForOpenAi(credential) {
+  return tranform(undefined, SttOpenaiLanguagesVoices, TtsModelOpenai, SttModelOpenai);
+}
+
+async function getLanguagesVoicesForVerbio(credentials, getTtsVoices, logger) {
+  const stt = SttVerbioLanguagesVoices.reduce((acc, v) => {
+    if (!v.version || (credentials && credentials.engine_version === v.version)) {
+      acc.push(v);
+    }
+    return acc;
+  }, []);
+  try {
+    if (credentials) {
+      const data = await getTtsVoices({vendor: 'verbio', credentials});
+      const voices = parseVerbioLanguagesVoices(data);
+      return tranform(voices, stt, undefined);
+    }
+    return tranform(TtsVerbioLanguagesVoices, stt, undefined);
+  } catch (err) {
+    logger.info({err}, 'there is error while fetching verbio speech voices');
+    return tranform(TtsVerbioLanguagesVoices, stt, undefined);
+  }
+}
+
+async function getLanguagesAndVoicesForResemble(credential, getTtsVoices, logger) {
+  if (credential) {
+    try {
+      const {api_key} = credential;
+      let allVoices = [];
+      let page = 1;
+      let hasMorePages = true;
+      // Fetch all pages of voices
+      while (hasMorePages) {
+        const response = await fetch(`https://app.resemble.ai/api/v2/voices?page=${page}&page_size=100`, {
+          headers: {
+            'Authorization': `Token token=${api_key}`,
+            'Accept': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('failed to list voices');
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error('API returned unsuccessful response');
+        }
+
+        allVoices = allVoices.concat(data.items);
+
+        // Check if there are more pages
+        hasMorePages = page < data.num_pages;
+        page++;
+      }
+
+      // Filter only finished voices that support text_to_speech
+      const availableVoices = allVoices.filter((voice) =>
+        voice.status === 'finished' &&
+        voice.component_status?.text_to_speech?.status === 'ready'
+      );
+
+      // Group voices by language
+      const ttsVoices = availableVoices.reduce((acc, voice) => {
+        const languageCode = voice.default_language || 'en-US';
+        const existingLanguage = acc.find((lang) => lang.value === languageCode);
+
+        const voiceEntry = {
+          name: `${voice.name} (${voice.voice_type}) - ${voice.source}`,
+          value: voice.uuid
+        };
+
+        if (existingLanguage) {
+          existingLanguage.voices.push(voiceEntry);
+        } else {
+
+          acc.push({
+            value: languageCode,
+            name: capitalizeFirst(languageCode),
+            voices: [voiceEntry]
+          });
+        }
+
+        return acc;
+      }, []);
+      // Sort languages and voices
+      ttsVoices.sort((a, b) => a.name.localeCompare(b.name));
+      ttsVoices.forEach((lang) => {
+        lang.voices.sort((a, b) => a.name.localeCompare(b.name));
+      });
+      return tranform(ttsVoices);
+    } catch (err) {
+      logger.info('Error while fetching Resemble languages, voices, return predefined values', err);
+    }
+  }
+
+  return tranform(TtsResembleLanguagesVoices);
+}
+
+function tranform(tts, stt, models, sttModels) {
+  return {
+    ...(tts && {tts}),
+    ...(stt && {stt}),
+    ...(models && {models}),
+    ...(sttModels && {sttModels})
+  };
+}
+
+function parseGooglelanguagesVoices(data) {
+  return data.reduce((acc, voice) => {
+    const languageCode = voice.languageCodes[0];
+    const existingLanguage = acc.find((lang) => lang.value === languageCode);
+    if (existingLanguage) {
+      existingLanguage.voices.push({
+        value: voice.name,
+        name: `${voice.name.startsWith(languageCode) ?
+          voice.name.substring(languageCode.length + 1, voice.name.length) : voice.name} (${voice.ssmlGender})`
+      });
+    } else {
+      acc.push({
+        value: languageCode,
+        name: SttGoogleLanguagesVoices.find((lang) => lang.value === languageCode)?.name || languageCode,
+        voices: [{
+          value: voice.name,
+          name: `${voice.name.startsWith(languageCode) ?
+            voice.name.substring(languageCode.length + 1, voice.name.length) : voice.name} (${voice.ssmlGender})`
+        }]
+      });
+    }
+
+    return acc;
+  }, []);
+}
+
+function parseIBMLanguagesVoices(data) {
+  return data.reduce((acc, voice) => {
+    const languageCode = voice.language;
+    const existingLanguage = acc.find((lang) => lang.value === languageCode);
+    if (existingLanguage) {
+      existingLanguage.voices.push({
+        value: voice.name,
+        name: `(${voice.gender}) ${voice.description}`
+      });
+    } else {
+      acc.push({
+        value: languageCode,
+        name: SttGoogleLanguagesVoices.find((lang) => lang.value === languageCode)?.name || languageCode,
+        voices: [{
+          value: voice.name,
+          name: `(${voice.gender}) ${voice.description}`
+        }]
+      });
+    }
+    return acc;
+  }, []);
+}
+
+function parseAwsLanguagesVoices(data) {
+  return data.reduce((acc, voice) => {
+    const languageCode = voice.LanguageCode;
+    const existingLanguage = acc.find((lang) => lang.value === languageCode);
+    if (existingLanguage) {
+      existingLanguage.voices.push({
+        value: voice.Id,
+        name: `${voice.Name} (${voice.Gender})`
+      });
+    } else {
+      acc.push({
+        value: languageCode,
+        name: voice.LanguageName,
+        voices: [{
+          value: voice.Id,
+          name: `${voice.Name} (${voice.Gender})`
+        }]
+      });
+    }
+    return acc;
+  }, []);
+}
+
+function parseNuanceLanguagesVoices(data) {
+  return data.reduce((acc, voice) => {
+    const languageCode = voice.language;
+    const existingLanguage = acc.find((lang) => lang.value === languageCode);
+    if (existingLanguage) {
+      existingLanguage.voices.push({
+        value: voice.name,
+        name: voice.name,
+        model: voice.model
+      });
+    } else {
+      acc.push({
+        value: languageCode,
+        name: SttGoogleLanguagesVoices.find((lang) => lang.value === languageCode)?.name || languageCode,
+        voices: [{
+          value: voice.name,
+          name: voice.name,
+          model: voice.model
+        }]
+      });
+    }
+    return acc;
+  }, []);
+}
+
+function parseMicrosoftLanguagesVoices(data) {
+  return data.reduce((acc, voice) => {
+    const languageCode = voice.Locale;
+    const existingLanguage = acc.find((lang) => lang.value === languageCode);
+    if (existingLanguage) {
+      existingLanguage.voices.push({
+        value: voice.ShortName,
+        name: `${voice.DisplayName} (${voice.Gender})`,
+      });
+    } else {
+      acc.push({
+        value: voice.Locale,
+        name: voice.LocaleName,
+        voices: [{
+          value: voice.ShortName,
+          name: `${voice.DisplayName} (${voice.Gender})`,
+        }]
+      });
+    }
+    return acc;
+  }, []);
+}
+
+function parseVerbioLanguagesVoices(data) {
+  return data.voices.reduce((acc, voice) => {
+    const languageCode = voice.language;
+    const existingLanguage = acc.find((lang) => lang.value === languageCode);
+    if (existingLanguage) {
+      existingLanguage.voices.push({
+        value: voice.voice_id,
+        name: voice.name,
+      });
+    } else {
+      acc.push({
+        value: voice.language,
+        name: voice.language,
+        voices: [{
+          value: voice.voice_id,
+          name: voice.name,
+        }]
+      });
+    }
+    return acc;
+  }, []);
+}
+
+const fetchCartesiaVoices = async(credential) => {
+  if (credential) {
+    const response = await fetch('https://api.cartesia.ai/voices', {
+      headers: {
+        'X-API-Key': credential.api_key,
+        'Cartesia-Version': '2024-06-10',
+        'Accept': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      throw new Error('failed to list voices');
+    }
+
+    return await response.json();
+  }
+};
+
+const testCartesia = async(logger, synthAudio, credentials) => {
+  try {
+    await synthAudio(
+      {
+        increment: () => {},
+        histogram: () => {}
+      },
+      {
+        vendor: 'cartesia',
+        credentials,
+        language: 'en',
+        voice: '694f9389-aac1-45b6-b726-9d9369183238',
+        text: 'Hi there and welcome to jambones!',
+        renderForCaching: true
+      }
+    );
+    // Test if Cartesia can fetch voices
+    await fetchCartesiaVoices(credentials);
+  } catch (err) {
+    logger.info({err}, 'synth cartesia returned error');
+    throw err;
+  }
+};
+
+async function getLanguagesVoicesForCartesia(credential) {
+  if (credential) {
+    const {model_id} = credential;
+    const {languages} = TtsModelCartesia.find((m) => m.value === model_id);
+    const voices = await fetchCartesiaVoices(credential);
+
+    const buildVoice = (d) => (
+      {
+        value: `${d.id}`,
+        name: `${d.name} - ${d.description}`
+      });
+    const languageMap = {
+      en: 'English',
+      fr: 'French',
+      de: 'German',
+      es: 'Spanish',
+      pt: 'Portuguese',
+      zh: 'Chinese',
+      ja: 'Japanese',
+      hi: 'Hindi',
+      it: 'Italian',
+      ko: 'Korean',
+      nl: 'Dutch',
+      pl: 'Polish',
+      ru: 'Russian',
+      sv: 'Swedish',
+      tr: 'Turkish',
+    };
+    const ttsVoices = voices.reduce((acc, voice) => {
+      if (!languages.includes(voice.language)) {
+        return acc;
+      }
+
+      const languageCode = voice.language;
+      const existingLanguage = acc.find((lang) => lang.value === languageCode);
+      if (existingLanguage) {
+        existingLanguage.voices.push(buildVoice(voice));
+      } else {
+        acc.push({
+          value: languageCode,
+          name: languageMap[languageCode],
+          voices: [buildVoice(voice)]
+        });
+      }
+      return acc;
+    }, []);
+
+    return tranform(
+      ttsVoices,
+      ttsVoices.map((voice) => ({
+        name: voice.name,
+        value: voice.value,
+      })),
+      TtsModelCartesia,
+      sttModelCartesia);
+  }
+  return tranform(
+    ttsCartesia,
+    ttsCartesia.map((voice) => ({
+      name: voice.name,
+      value: voice.value,
+    })),
+    TtsModelCartesia,
+    sttModelCartesia);
+}
+
+module.exports = {
+  testGoogleTts,
+  testGoogleStt,
+  testAwsTts,
+  testWellSaidTts,
+  testAwsStt,
+  testMicrosoftTts,
+  testMicrosoftStt,
+  testWellSaidStt,
+  testNuanceTts,
+  testNuanceStt,
+  testDeepgramStt,
+  testGladiaStt,
+  testIbmTts,
+  testIbmStt,
+  testSonioxStt,
+  testElevenlabs,
+  testPlayHT,
+  testRimelabs,
+  testInworld,
+  testAssemblyStt,
+  testDeepgramTTS,
+  getSpeechCredential,
+  decryptCredential,
+  testWhisper,
+  testVerbioTts,
+  testVerbioStt,
+  getLanguagesAndVoicesForVendor,
+  testSpeechmaticsStt,
+  testCartesia,
+  testVoxistStt,
+  testOpenAiStt,
+  testResembleTTS,
+  testHoundifyStt
+};
+
+export {};
